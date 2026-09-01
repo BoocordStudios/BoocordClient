@@ -67,7 +67,7 @@
     "msmc": "^5.0.5"
   },
   "devDependencies": {
-    "electron": "^41.10.7",
+    "electron": "^44.0.0",
     "electron-builder": "^26.15.3"
   }
 }
