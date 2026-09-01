@@ -108,25 +108,58 @@ function assertTranslation(translate, source, expected, context = source) {
 function decodeHtmlText(value) {
   return String(value)
     .replace(/&copy;/g, "©")
-    .replace(/&amp;/g, "&")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, "&")
     .replace(/\s+/g, " ")
     .trim();
 }
 
+function removeMarkedSections(html, marker) {
+  let remaining = String(html);
+  let markerIndex = remaining.indexOf(marker);
+
+  while (markerIndex >= 0) {
+    const sectionStart = remaining.lastIndexOf("<section", markerIndex);
+
+    if (sectionStart < 0) {
+      fail(`Markierter HTML-Abschnitt ist unvollständig: ${marker}`);
+    }
+
+    let depth = 1;
+    let cursor = markerIndex + marker.length;
+
+    while (depth > 0) {
+      const nextSectionStart = remaining.indexOf("<section", cursor);
+      const nextSectionEnd = remaining.indexOf("</section>", cursor);
+
+      if (nextSectionEnd < 0) {
+        fail(`Markierter HTML-Abschnitt ist unvollständig: ${marker}`);
+      }
+
+      if (nextSectionStart >= 0 && nextSectionStart < nextSectionEnd) {
+        depth += 1;
+        cursor = nextSectionStart + "<section".length;
+      } else {
+        depth -= 1;
+        cursor = nextSectionEnd + "</section>".length;
+      }
+    }
+
+    remaining =
+      remaining.slice(0, sectionStart) +
+      remaining.slice(cursor);
+    markerIndex = remaining.indexOf(marker);
+  }
+
+  return remaining;
+}
+
 function extractStaticUiStrings(html, { removeSkippedSections = false } = {}) {
-  let normalizedHtml = html
-    .replace(/<!--[\s\S]*?-->/g, "")
-    .replace(/<script\b[\s\S]*?<\/script>/gi, "")
-    .replace(/<style\b[\s\S]*?<\/style>/gi, "")
-    .replace(/<span\b[^>]*class="[^"]*material-icons[^"]*"[^>]*>[\s\S]*?<\/span>/gi, "");
+  let normalizedHtml = String(html);
 
   if (removeSkippedSections) {
-    normalizedHtml = normalizedHtml.replace(
-      /<section\b[^>]*data-i18n-skip="true"[^>]*>[\s\S]*?<\/section>/gi,
-      ""
-    );
+    normalizedHtml = removeMarkedSections(normalizedHtml, 'data-i18n-skip="true"');
   }
 
   const values = [];
