@@ -1,13 +1,13 @@
 # Support
 
-GitHub Issues sind für reproduzierbare Fehler und konkrete Verbesserungsvorschläge
-am Boocord Client vorgesehen.
+GitHub Issues are intended for reproducible Boocord Client bugs and concrete
+improvement proposals.
 
-Bitte nutze vor einem neuen Issue die Suche und die passende Vorlage. Allgemeine
-Nutzungsfragen können über die in der Anwendung verlinkten Community-Kanäle
-gestellt werden. Sicherheitsprobleme gehören ausschließlich in den vertraulichen
-Meldeweg aus [SECURITY.md](SECURITY.md).
+Search existing issues and use the appropriate template before opening a new
+one. General usage questions can be asked through the community channels linked
+inside the application. Security issues must use the confidential reporting
+process in [SECURITY.md](SECURITY.md).
 
-Veröffentliche niemals Account-Sitzungen, Refresh-Tokens, vollständige Logs mit
-personenbezogenen Daten oder private Schlüssel. Kürze Logs auf den relevanten
-Abschnitt und anonymisiere lokale Pfade und Benutzernamen.
+Never publish account sessions, refresh tokens, private keys, or complete logs
+containing personal information. Include only the relevant part of a log and
+redact local paths and user names.

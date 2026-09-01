@@ -1,31 +1,31 @@
-## Zweck
+## Purpose
 
-<!-- Was wird geändert und warum? Verlinke zugehörige Issues. -->
+<!-- What changes, and why? Link related issues. -->
 
-## Umsetzung
+## Implementation
 
-<!-- Beschreibe die wichtigsten technischen Entscheidungen. -->
+<!-- Describe the most important technical decisions. -->
 
-## Prüfung
+## Verification
 
-<!-- Nenne ausgeführte automatisierte und manuelle Tests. -->
+<!-- List the automated and manual tests you ran. -->
 
-- [ ] `npm run smoke` ist erfolgreich.
-- [ ] Relevante manuelle Abläufe wurden geprüft oder als nicht anwendbar erklärt.
-- [ ] Änderungen an Abhängigkeiten enthalten einen aktualisierten Lockfile und
-      wurden mit `npm audit` geprüft.
+- [ ] `npm run smoke` passes.
+- [ ] Relevant manual flows were tested or marked as not applicable.
+- [ ] Dependency changes include an updated lockfile and were checked with
+      `npm audit`.
 
-## Sicherheit und Datenschutz
+## Security and privacy
 
-- [ ] Der Beitrag enthält keine Zugangsdaten, Account-Sitzungen, privaten
-      Schlüssel, personenbezogenen Logs oder lokalen Laufzeitdaten.
-- [ ] Neue Netzwerkziele, Downloads und ausführbare Inhalte werden validiert und
-      sind oben dokumentiert.
-- [ ] Auswirkungen auf Authentifizierung, IPC, Dateisystemzugriff und Electron-
-      Sicherheit sind beschrieben oder nicht anwendbar.
-- [ ] Neue Inhalte dürfen unter der Projektlizenz veröffentlicht werden; Inhalte
-      Dritter sind korrekt gekennzeichnet.
+- [ ] This contribution contains no credentials, account sessions, private
+      keys, personally identifiable logs, or local runtime data.
+- [ ] New network destinations, downloads, and executable content are validated
+      and documented above.
+- [ ] Effects on authentication, IPC, file-system access, and Electron security
+      are described or marked as not applicable.
+- [ ] New content may be published under the project license, and third-party
+      content is identified correctly.
 
 ## Screenshots
 
-<!-- Nur bei UI-Änderungen. Vorher personenbezogene Daten entfernen. -->
+<!-- Only for UI changes. Remove personal information first. -->

@@ -1,27 +1,27 @@
 # Boocord Client
 
-Ein eigenständiger Windows-Launcher für einen Minecraft-Client auf Basis von Fabric.
+An independent Windows launcher for a Fabric-based Minecraft client.
 
 > **NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH
 > MOJANG OR MICROSOFT.**
 
-## Was das Projekt macht
+## What it does
 
-- meldet Nutzer per Microsoft-Login direkt im Launcher an
-- installiert Fabric für Minecraft `1.21.11`
-- legt eine getrennte Runtime- und Instanzstruktur im eigenen App-Datenordner an
-- lädt Mods über die Modrinth-API inklusive Pflicht-Abhängigkeiten herunter
-- startet Minecraft direkt über `minecraft-launcher-core`
-- paketiert den Launcher als Windows-`.exe` mit `electron-builder`
+- signs users in with Microsoft directly inside the launcher
+- installs Fabric for Minecraft `1.21.11`
+- keeps runtime and instance data in an isolated application-data directory
+- downloads mods and required dependencies through the Modrinth API
+- launches Minecraft through `minecraft-launcher-core`
+- packages the launcher as a Windows `.exe` with `electron-builder`
 
-## Voraussetzungen
+## Requirements
 
 - Windows
-- Java 21 oder neuer
-- Microsoft-Konto mit Minecraft Java Edition
-- Node.js 22.12 oder neuer
+- Java 21 or newer
+- a Microsoft account that owns Minecraft: Java Edition
+- Node.js 22.12 or newer
 
-## Entwicklung
+## Development
 
 ```powershell
 npm install
@@ -30,60 +30,63 @@ npm run smoke
 npm run start
 ```
 
-Optionales getrenntes Profil:
+To use an additional isolated profile:
 
 ```powershell
 npm run start -- --profile=alt
 ```
 
-## Installer bauen
+## Building the installer
 
-Für das vollständige Setup mit Boocord-Oberfläche:
+Build the complete installer with the Boocord setup interface:
 
 ```powershell
 npm run dist:installer
 ```
 
-Das veröffentlichbare Ergebnis ist `dist/Boocord Client Installer <version>.exe`.
-`dist/SHA256SUMS.txt` enthält die dazugehörigen SHA-256-Prüfsummen. Mit
-`npm run dist` lässt sich nur der innere NSIS-Installer bauen.
+The outer installer is written to
+`dist/Boocord Client Installer <version>.exe`.
+`dist/SHA256SUMS.txt` contains the corresponding SHA-256 checksums.
+`npm run dist` builds only the inner NSIS installer.
 
-Der Windows-Installer nutzt ein reduziertes Boocord-Branding mit eigenem
-Header/Sidebar und installiert standardmäßig direkt für den aktuellen Benutzer.
+The Windows installer uses a minimal Boocord-branded header and sidebar. By
+default, it installs directly for the current user.
 
-## Mehrere Installationen und Profile
+## Multiple installations and profiles
 
-- jede Installation bekommt automatisch einen eigenen getrennten App-Datenbereich
-- zusätzliche Profile aus derselben Installation sind über `--profile=<name>` möglich
-- jedes Profil hat eigene Settings, Runtime und Instanzdaten
-- Accounts werden installationsweit geteilt und stehen in allen Profilen zur Verfügung
+- every installation automatically receives its own application-data area
+- additional profiles from the same installation can be selected with
+  `--profile=<name>`
+- every profile has separate settings, runtime files, and instance data
+- accounts are shared across profiles belonging to the same installation
 
-## Client anpassen
+## Customizing the client
 
-- Basis-Mods in `client.manifest.json`
-- vordefinierte Konfigurationen in `overrides/`
-- Branding und UI in `src/renderer/`
+- base mods: `client.manifest.json`
+- predefined configuration: `overrides/`
+- branding and user interface: `src/renderer/`
 
-## Datenschutz und externe Dienste
+## Privacy and external services
 
-Informationen zur lokalen Kontospeicherung und zu kontaktierten Diensten stehen
-in [PRIVACY.md](PRIVACY.md). Sitzungsdateien, Profile, Logs und Build-Ausgaben
-gehören nicht in Commits oder Fehlerberichte.
+[PRIVACY.md](PRIVACY.md) explains local account storage and the external
+services contacted by the client. Session files, profiles, logs, and build
+outputs must not be committed or attached to bug reports.
 
-## Unabhängiges Projekt
+## Independent project
 
-Boocord Client ist ein unabhängiges Community-Projekt und wird nicht von
-Microsoft, Mojang, Minecraft, Fabric, Discord oder Modrinth angeboten,
-unterstützt oder geprüft. Namen und Marken gehören ihren jeweiligen Inhabern.
-Mods werden zur Laufzeit aus den angegebenen Drittquellen geladen und unterliegen
-den Lizenz- und Nutzungsbedingungen der jeweiligen Projekte.
+Boocord Client is an independent community project. It is not offered,
+supported, or reviewed by Microsoft, Mojang, Minecraft, Fabric, Discord, or
+Modrinth. Names and trademarks belong to their respective owners. Mods are
+downloaded at runtime from the configured third-party sources and remain
+subject to the licenses and terms of their respective projects.
 
-## Sicherheitsstatus
+## Security status
 
-Der Quellcode wird automatisiert auf Syntaxfehler, Secrets und bekannte
-Schwachstellen geprüft. Im Abhängigkeitsbaum von
-`minecraft-launcher-core@3.18.2` bestehen derzeit bekannte Audit-Meldungen; der
-aktuelle Stand ist in [.github/OPEN_SOURCE_CHECKLIST.md](.github/OPEN_SOURCE_CHECKLIST.md)
-dokumentiert. Veröffentlichte Windows-Dateien sind nur dann als signiert zu
-betrachten, wenn GitHub dies in den jeweiligen Release-Hinweisen ausdrücklich
-bestätigt.
+The source is automatically checked for syntax errors, secrets, and known
+vulnerabilities. The dependency tree of
+`minecraft-launcher-core@3.18.2` currently contains known audit findings; the
+current status is documented in
+[.github/OPEN_SOURCE_CHECKLIST.md](.github/OPEN_SOURCE_CHECKLIST.md).
+
+Do not assume that a published Windows binary is signed unless its GitHub
+release notes explicitly confirm the signature.

@@ -1,5 +1,5 @@
-name: Fehler melden
-description: Einen reproduzierbaren Fehler im Boocord Client melden
+name: Report a bug
+description: Report a reproducible problem in Boocord Client
 title: "[Bug]: "
 labels:
   - bug
@@ -7,38 +7,38 @@ body:
   - type: markdown
     attributes:
       value: |
-        Danke für die Meldung. Suche bitte zuerst nach bestehenden Issues.
-        **Keine Sicherheitslücken, Tokens, Account-Sitzungen oder vollständigen personenbezogenen Logs veröffentlichen.** Nutze dafür den vertraulichen Meldeweg.
+        Thank you for the report. Please search existing issues first.
+        **Do not publish vulnerabilities, tokens, account sessions, or complete logs containing personal information.** Use the private security-reporting process instead.
   - type: checkboxes
     id: checks
     attributes:
-      label: Vorprüfung
+      label: Before submitting
       options:
-        - label: Ich habe nach bestehenden Issues gesucht.
+        - label: I searched existing issues.
           required: true
-        - label: Diese Meldung enthält keine Zugangsdaten oder personenbezogenen Daten.
+        - label: This report contains no credentials or personal information.
           required: true
-        - label: Es handelt sich nicht um eine vertraulich zu meldende Sicherheitslücke.
+        - label: This is not a vulnerability that should be reported privately.
           required: true
   - type: input
     id: version
     attributes:
-      label: Client-Version oder Commit
-      placeholder: z. B. 1.0.2 oder Commit-ID
+      label: Client version or commit
+      placeholder: For example, 1.0.2 or a commit ID
     validations:
       required: true
   - type: input
     id: environment
     attributes:
-      label: Umgebung
-      description: Windows-Version, Architektur, Java- und Node-Version soweit relevant
+      label: Environment
+      description: Windows version, architecture, and Java or Node.js versions where relevant
       placeholder: Windows 11 24H2, x64, Java 21
     validations:
       required: true
   - type: textarea
     id: steps
     attributes:
-      label: Schritte zum Reproduzieren
+      label: Steps to reproduce
       placeholder: |
         1. …
         2. …
@@ -48,22 +48,22 @@ body:
   - type: textarea
     id: expected
     attributes:
-      label: Erwartetes Verhalten
+      label: Expected behavior
     validations:
       required: true
   - type: textarea
     id: actual
     attributes:
-      label: Tatsächliches Verhalten
+      label: Actual behavior
     validations:
       required: true
   - type: textarea
     id: logs
     attributes:
-      label: Bereinigte Logs oder Screenshots
-      description: Nur den relevanten Ausschnitt einfügen; Tokens, Namen und lokale Pfade entfernen.
+      label: Redacted logs or screenshots
+      description: Include only the relevant section. Remove tokens, names, and local paths.
       render: shell
   - type: textarea
     id: context
     attributes:
-      label: Zusätzlicher Kontext
+      label: Additional context

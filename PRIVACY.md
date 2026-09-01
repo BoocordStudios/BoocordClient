@@ -1,52 +1,48 @@
-# Datenschutzinformationen zum Boocord Client
+# Boocord Client Privacy Notice
 
-Diese Hinweise beschreiben den im Repository enthaltenen Desktop-Client. Für
-Webseiten, Community-Angebote und die Dienste Dritter gelten deren eigene
-Datenschutzinformationen.
+This notice describes the desktop client contained in this repository.
+Websites, community services, and third-party services have their own privacy
+notices.
 
-## Lokal gespeicherte Daten
+## Data stored locally
 
-Der Client speichert Profileinstellungen, Installationsstatus, Logs und
-Minecraft-Laufzeitdaten lokal. Microsoft-/Minecraft-Konten werden mit
-Kontometadaten und einem Refresh-Token in einer lokalen JSON-Sitzungsdatei unter
-`%APPDATA%\Boocord Client\installations\<Installations-ID>` gespeichert. Diese
-Datei ist vertraulich und darf nicht geteilt oder in ein Repository übernommen
-werden.
+The client stores profile settings, installation state, logs, and Minecraft
+runtime data locally. Microsoft and Minecraft accounts are stored with account
+metadata and a refresh token in a local JSON session file under
+`%APPDATA%\Boocord Client\installations\<installation-id>`. This file is
+sensitive and must never be shared or committed to a repository.
 
-Der geprüfte Client-Code enthält keine eigene Telemetrie- oder
-Analytics-Funktion. Diagnoseinformationen werden lokal protokolliert, können
-aber Benutzernamen, Dateipfade, Serverinformationen oder Startparameter
-enthalten.
+The reviewed client code contains no first-party telemetry or analytics
+feature. Diagnostic information is logged locally, but it may contain user
+names, file paths, server information, or launch arguments.
 
-## Kontaktierte Dienste
+## Services contacted
 
-Abhängig von der verwendeten Funktion verbindet sich der Client direkt mit:
+Depending on the feature being used, the client connects directly to:
 
-- Microsoft-, Xbox- und Minecraft-Diensten für Anmeldung und Spielberechtigung,
-- Mojang-/Minecraft-, Fabric- und Adoptium-Endpunkten für Spiel-, Loader- und
-  Java-Dateien,
-- Modrinth für Projektmetadaten und Downloads,
-- Discord über die lokal installierte Discord-Anwendung für Rich Presence,
-- `boocord.com` für den angezeigten Serverstatus,
-- Google Fonts beim Laden der Oberfläche und `mineskin.eu` für bestimmte
-  Spielerkopf-Grafiken.
+- Microsoft, Xbox, and Minecraft services for sign-in and game entitlement;
+- Mojang/Minecraft, Fabric, and Adoptium endpoints for game, loader, and Java
+  files;
+- Modrinth for project metadata and downloads;
+- Discord through the locally installed Discord application for Rich Presence;
+- `boocord.com` for the displayed server status;
+- Google Fonts while loading the interface and `mineskin.eu` for certain
+  player-head images.
 
-Dabei erhalten die jeweiligen Betreiber technisch notwendige Verbindungsdaten
-wie die IP-Adresse. An Microsoft/Xbox/Minecraft werden außerdem die für die
-Anmeldung erforderlichen Konto- und Token-Daten übertragen. Der überprüfte
-Client-Code sendet Microsoft-Refresh-Tokens nicht an einen eigenen
-Boocord-Server.
+These providers receive technically necessary connection data such as the IP
+address. Microsoft, Xbox, and Minecraft also receive the account and token data
+required for authentication. The reviewed client code does not send Microsoft
+refresh tokens to a Boocord-operated server.
 
-## Kontrolle und Löschung
+## Control and deletion
 
-Konten können über die Abmeldefunktion aus der lokalen Sitzung entfernt werden.
-Eine Deinstallation entfernt nicht zwingend Profile, Logs, Laufzeiten oder
-Sitzungsdateien. Für eine vollständige lokale Löschung muss der zugehörige
-Installationsordner unter `%APPDATA%\Boocord Client\installations` sowie ein
-eventuell selbst gewählter Spieldatenordner gelöscht werden. Vorher sollte der
-Client vollständig beendet sein.
+Accounts can be removed from the local session by signing out in the client.
+Uninstalling the application does not necessarily delete profiles, logs,
+runtimes, or session files. To remove all local data, delete the corresponding
+installation directory under
+`%APPDATA%\Boocord Client\installations` and any custom game-data directory
+after fully closing the client.
 
-Veröffentliche bei Support- oder Sicherheitsmeldungen niemals Refresh-Tokens,
-vollständige Sitzungsdateien oder ungefilterte Logs. Sicherheitsprobleme werden
-über den vertraulichen Meldeweg in [.github/SECURITY.md](.github/SECURITY.md)
-gemeldet.
+Never publish refresh tokens, complete session files, or unredacted logs in a
+support or security report. Report security issues through the confidential
+process described in [.github/SECURITY.md](.github/SECURITY.md).

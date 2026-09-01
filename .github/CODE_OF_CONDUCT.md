@@ -1,25 +1,24 @@
-# Verhaltenskodex
+# Code of Conduct
 
-Wir möchten eine offene, respektvolle und sichere Zusammenarbeit ermöglichen.
+We want collaboration in this project to be open, respectful, and safe.
 
-## Erwartetes Verhalten
+## Expected behavior
 
-- Begegne anderen sachlich, respektvoll und geduldig.
-- Akzeptiere unterschiedliche Erfahrungen, Perspektiven und Fähigkeiten.
-- Gib konstruktives Feedback und übernimm Verantwortung für eigene Fehler.
-- Achte auf Privatsphäre und veröffentliche keine personenbezogenen Daten.
+- Be factual, respectful, and patient with others.
+- Respect different experiences, perspectives, and abilities.
+- Give constructive feedback and take responsibility for your own mistakes.
+- Respect privacy and do not publish personal information.
 
-## Nicht akzeptiertes Verhalten
+## Unacceptable behavior
 
-Belästigung, Diskriminierung, Drohungen, sexualisierte Aufmerksamkeit,
-gezieltes Stören sowie die Veröffentlichung privater Informationen werden nicht
-toleriert. Das gilt für alle Projektbereiche und für öffentliche Auftritte im
-Namen des Projekts.
+Harassment, discrimination, threats, sexualized attention, deliberate
+disruption, and the publication of private information are not tolerated. This
+applies to every project space and to public representation of the project.
 
-## Durchsetzung
+## Enforcement
 
-Vorfälle sollen vertraulich an die Maintainer über einen privaten, auf dem
-Organisationsprofil angegebenen Kontaktweg gemeldet werden. Maintainer können
-Beiträge bearbeiten oder entfernen und Beteiligte vorübergehend oder dauerhaft
-von Projektbereichen ausschließen. Meldungen werden so vertraulich behandelt,
-wie es eine faire Prüfung erlaubt.
+Report incidents confidentially to the maintainers through a private contact
+method listed on the organization profile. Maintainers may edit or remove
+contributions and may temporarily or permanently exclude participants from
+project spaces. Reports will be handled as confidentially as a fair review
+allows.

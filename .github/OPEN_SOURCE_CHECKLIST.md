@@ -1,79 +1,78 @@
-# Checkliste für die öffentliche Freigabe
+# Open-source release checklist
 
-Diese Datei dokumentiert den geprüften Freigabestatus, ist aber keine Garantie.
-Offene Punkte zum Signieren und zu Laufzeitabhängigkeiten blockieren einen als
-stabil beworbenen Binär-Release; der Quellcode darf mit transparentem Hinweis
-darauf öffentlich entwickelt werden.
+This file documents the reviewed release status, but it is not a guarantee.
+Open code-signing and runtime-dependency items block a binary from being
+presented as a stable release. The source may be developed publicly as long as
+those limitations remain clearly disclosed.
 
-## Lokale Vorbereitung
+## Local preparation
 
-- [x] Build-, Abhängigkeits-, Test-, Laufzeit- und Profilverzeichnisse sind in
-      `.gitignore` ausgeschlossen.
-- [x] Bekannte Sitzungsdateien, Logs, Umgebungsdateien und Signaturschlüssel sind
-      in `.gitignore` ausgeschlossen.
-- [x] MIT-Lizenz, Beitragsregeln, Verhaltenskodex, Support- und
-      Sicherheitsrichtlinie sind vorhanden.
-- [x] CI-, CodeQL-, Dependency-Review- und Secret-Scan-Workflows verwenden
-      minimale Berechtigungen und auf Commit-SHAs fixierte Actions.
-- [ ] `npm audit --package-lock-only --omit=dev` meldet keine ungeklärten hohen
-      oder kritischen Laufzeitrisiken. Stand 01.09.2026: **nicht erfüllt**
-      (zwei hohe und zwei kritische Meldungen im Pfad über
-      `minecraft-launcher-core`).
-- [ ] `npm audit --package-lock-only --audit-level=high` meldet auch für die
-      paketierte Electron-Laufzeit und die Build-Werkzeuge keine ungeklärten
-      hohen oder kritischen Risiken. Stand 01.09.2026: **nicht erfüllt**.
-- [x] Nicht verwendete Duplikate im Repository-Root (`main.js`, `preload.js`)
-      wurden geprüft und aus dem Veröffentlichungsumfang entfernt. Produktive
-      Einstiegspunkte liegen ausschließlich unter `src/`.
-- [x] Alle für den ersten Commit vorgemerkten Dateien wurden einzeln geprüft;
-      insbesondere keine Inhalte aus `tmp*`, `game-data`, `dist*`,
-      `node_modules` oder App-Profilen.
-- [x] Lokaler Kandidaten-Scan, GitHub Push Protection und der vollständige
-      TruffleHog-Scan des veröffentlichten Git-Verlaufs sind ohne ungeklärte
-      Treffer abgeschlossen.
-- [ ] Rechte an Quellcode, Logo, Installer-Grafiken, Konfigurationen und sonstigen
-      Assets sind geklärt. Inhalte Dritter sind mit Quelle und Lizenz erfasst.
-- [x] README, Projektbeschreibung und Markenhinweise erklären die Beziehung zu
-      Minecraft, Microsoft, Fabric, Discord und Modrinth korrekt und vermeiden
-      den Eindruck einer offiziellen Zugehörigkeit.
+- [x] Build, dependency, test, runtime, and profile directories are excluded by
+      `.gitignore`.
+- [x] Known session files, logs, environment files, and signing keys are
+      excluded by `.gitignore`.
+- [x] The MIT License, contribution guide, code of conduct, support policy, and
+      security policy are present.
+- [x] CI, CodeQL, dependency-review, and secret-scanning workflows use minimum
+      permissions and pin actions to commit SHAs.
+- [ ] `npm audit --package-lock-only --omit=dev` reports no unresolved high or
+      critical runtime risks. Status on 2026-09-01: **not met** because of two
+      high and two critical findings in the
+      `minecraft-launcher-core` dependency path.
+- [ ] `npm audit --package-lock-only --audit-level=high` reports no unresolved
+      high or critical findings in the packaged Electron runtime or build
+      tooling. Status on 2026-09-01: **not met**.
+- [x] Unused root duplicates (`main.js` and `preload.js`) were reviewed and
+      removed from the publication scope. Production entry points exist only
+      under `src/`.
+- [x] Every file selected for the initial commit was reviewed. No content from
+      `tmp*`, `game-data`, `dist*`, `node_modules`, or application
+      profiles is included.
+- [x] The local candidate scan, GitHub Push Protection, and the full TruffleHog
+      scan of the published Git history completed without unresolved findings.
+- [ ] Rights to the source, logo, installer graphics, configuration, and other
+      assets have been confirmed. Third-party material is attributed with its
+      source and license.
+- [x] The README, repository description, and trademark notices accurately
+      describe the relationship with Minecraft, Microsoft, Fabric, Discord, and
+      Modrinth without suggesting official affiliation.
 
-## GitHub-Einstellungen
+## GitHub settings
 
-- [x] Private Vulnerability Reporting ist aktiviert.
-- [x] Secret Scanning und Push Protection sind aktiviert.
-- [x] Dependency Graph, Dependabot Alerts und Security Updates sind aktiviert.
-- [x] Das Standard-Token für Actions besitzt nur Leserechte; Schreibrechte werden
-      ausschließlich pro Job vergeben.
-- [x] Ein aktives Ruleset schützt den Standard-Branch vor Löschung und
-      nicht-linearen Force-Pushes, ohne normale Maintainer-Pushes zu blockieren.
-- [ ] Für den Standard-Branch gilt ein Ruleset: Pull Request erforderlich,
-      mindestens ein unabhängiges Review, veraltete Freigaben verwerfen,
-      Diskussionen auflösen, erforderliche Checks erzwingen sowie Force-Pushes
-      und Löschung sperren.
-- [ ] Als erforderliche Checks sind mindestens CI, CodeQL, Dependency Review und
-      Secret Scan ausgewählt, nachdem sie einmal erfolgreich gelaufen sind.
-- [x] CODEOWNERS benennt `@BoocordStudios` für das Repository und die
-      sicherheitskritischen Bereiche.
-- [ ] Nicht benötigte Actions, Apps, Deploy Keys, Webhooks und Repository-Secrets
-      wurden entfernt; verbleibende Zugriffe folgen dem Least-Privilege-Prinzip.
+- [x] Private Vulnerability Reporting is enabled.
+- [x] Secret Scanning and Push Protection are enabled.
+- [x] The Dependency Graph, Dependabot Alerts, and security updates are enabled.
+- [x] The default Actions token has read-only permissions; write access is
+      granted only per job.
+- [x] An active ruleset protects the default branch from deletion and
+      non-fast-forward force pushes without blocking normal maintainer pushes.
+- [ ] The default-branch ruleset requires pull requests, at least one
+      independent review, dismissal of stale approvals, resolution of
+      discussions, required checks, and protection from force pushes and
+      deletion.
+- [ ] Required checks include at least CI, CodeQL, Dependency Review, and Secret
+      Scan after each has completed successfully at least once.
+- [x] CODEOWNERS assigns `@BoocordStudios` to the repository and
+      security-sensitive areas.
+- [ ] Unneeded Actions, apps, deploy keys, webhooks, and repository secrets have
+      been removed; remaining access follows the principle of least privilege.
 
-## Release und Betrieb
+## Release and operations
 
-- [ ] Windows-Builds werden reproduzierbar aus einem geschützten Tag erstellt.
-- [ ] Installer und Updates sind mit einem geschützten Code-Signing-Zertifikat
-      signiert; dessen privater Schlüssel liegt niemals im Repository.
-- [x] Der vollständige Installer-Build erzeugt SHA-256-Prüfsummen.
-- [x] Für den aktuellen 1.0.2-Build wurde eine validierte CycloneDX-1.6-SBOM
-      mit reproduzierbarer Ausgabe erzeugt und in die Prüfsummendatei
-      aufgenommen.
-- [ ] Update- und Downloadquellen verwenden HTTPS, prüfen erwartete Herkunft und
-      validieren Hashes beziehungsweise Signaturen vor der Ausführung.
-- [x] Datenschutzinformationen erklären Microsoft-Login, Discord Rich Presence,
-      externe APIs, lokal gespeicherte Kontodaten und Löschmöglichkeiten.
-- [x] `@BoocordStudios` ist als Maintainer benannt; Sicherheitsmeldungen können
-      über GitHubs Private Vulnerability Reporting vertraulich eingereicht werden.
+- [ ] Windows builds are reproduced from a protected tag.
+- [ ] Installers and updates are signed with a protected code-signing
+      certificate whose private key is never stored in the repository.
+- [x] The complete installer build generates SHA-256 checksums.
+- [x] A validated CycloneDX 1.6 SBOM with reproducible output was generated for
+      the current 1.0.2 build and included in the checksum file.
+- [ ] Update and download sources use HTTPS, verify the expected origin, and
+      validate hashes or signatures before execution.
+- [x] The privacy notice explains Microsoft sign-in, Discord Rich Presence,
+      external APIs, locally stored account data, and deletion options.
+- [x] `@BoocordStudios` is named as maintainer, and security reports can be
+      submitted confidentially through GitHub Private Vulnerability Reporting.
 
-## Direkt vor der Veröffentlichung
+## Immediately before a release
 
 ```powershell
 git status --short
@@ -84,5 +83,5 @@ npm run smoke
 npm audit --package-lock-only --audit-level=high
 ```
 
-Nach dem Push sämtliche GitHub-Checks und Einstellungen verifizieren. Erst wenn
-die offenen Release-Punkte geklärt sind, einen Binär-Release als stabil markieren.
+Verify all GitHub checks and settings after pushing. Do not mark a binary
+release as stable until the remaining release items have been resolved.

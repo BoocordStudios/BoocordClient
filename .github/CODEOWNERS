@@ -1,6 +1,6 @@
 * @BoocordStudios
 
-# Änderungen an sicherheitskritischen Bereichen benötigen ein Maintainer-Review.
+# Changes to security-sensitive areas require maintainer review.
 /.github/workflows/ @BoocordStudios
 /package.json @BoocordStudios
 /package-lock.json @BoocordStudios

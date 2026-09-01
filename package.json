@@ -1,7 +1,7 @@
 {
   "name": "boocord-client-launcher",
   "version": "1.0.2",
-  "description": "Eigenständiger Windows-Launcher für einen Fabric-basierten Minecraft-Client.",
+  "description": "Independent Windows launcher for a Fabric-based Minecraft client.",
   "main": "src/main.js",
   "author": "Boocord Studios",
   "license": "MIT",

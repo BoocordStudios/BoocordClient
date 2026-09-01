@@ -1,46 +1,46 @@
-name: Verbesserung vorschlagen
-description: Eine neue Funktion oder Verbesserung diskutieren
+name: Suggest an improvement
+description: Discuss a new feature or improvement
 title: "[Feature]: "
 labels:
   - enhancement
 body:
   - type: markdown
     attributes:
-      value: Danke für deinen Vorschlag. Beschreibe möglichst das Problem, nicht nur eine konkrete Implementierung.
+      value: Describe the problem you want to solve, not only a specific implementation.
   - type: checkboxes
     id: checks
     attributes:
-      label: Vorprüfung
+      label: Before submitting
       options:
-        - label: Ich habe nach bestehenden Issues und Pull Requests gesucht.
+        - label: I searched existing issues and pull requests.
           required: true
-        - label: Der Vorschlag benötigt keine Veröffentlichung fremder oder vertraulicher Inhalte.
+        - label: This proposal does not require publishing third-party or confidential material.
           required: true
   - type: textarea
     id: problem
     attributes:
-      label: Problem oder Anwendungsfall
-      description: Welches konkrete Problem soll gelöst werden und für wen?
+      label: Problem or use case
+      description: What specific problem should be solved, and for whom?
     validations:
       required: true
   - type: textarea
     id: solution
     attributes:
-      label: Gewünschtes Ergebnis
+      label: Desired outcome
     validations:
       required: true
   - type: textarea
     id: alternatives
     attributes:
-      label: Erwogene Alternativen
+      label: Alternatives considered
   - type: textarea
     id: security
     attributes:
-      label: Sicherheits- und Datenschutzfolgen
-      description: Betrifft der Vorschlag Login, Netzwerk, Downloads, IPC, Dateien oder Nutzerdaten?
+      label: Security and privacy impact
+      description: Does the proposal affect sign-in, networking, downloads, IPC, files, or user data?
     validations:
       required: true
   - type: textarea
     id: context
     attributes:
-      label: Zusätzlicher Kontext
+      label: Additional context

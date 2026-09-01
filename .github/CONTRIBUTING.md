@@ -1,19 +1,19 @@
-# Zum Boocord Client beitragen
+# Contributing to Boocord Client
 
-Danke für dein Interesse. Kleine, klar abgegrenzte Änderungen lassen sich am
-einfachsten prüfen und sicher veröffentlichen.
+Thank you for your interest. Small, focused changes are the easiest to review
+and release safely.
 
-## Vor dem Start
+## Before you begin
 
-1. Suche in bestehenden Issues und Pull Requests nach ähnlichen Themen.
-2. Eröffne für größere oder inkompatible Änderungen zuerst einen Vorschlag.
-3. Melde Sicherheitsprobleme niemals öffentlich, sondern wie in
-   [SECURITY.md](SECURITY.md) beschrieben.
+1. Search existing issues and pull requests for similar work.
+2. Open a proposal before starting a large or incompatible change.
+3. Never report a security issue publicly. Follow
+   [SECURITY.md](SECURITY.md) instead.
 
-## Entwicklungsumgebung
+## Development environment
 
-Benötigt werden Windows, Node.js 22.12 oder neuer, npm und für vollständige
-Launcher-Tests Java 21 oder neuer.
+Development requires Windows, Node.js 22.12 or newer, and npm. Full launcher
+testing also requires Java 21 or newer.
 
 ```powershell
 npm ci
@@ -22,23 +22,21 @@ npm run smoke
 npm run start
 ```
 
-Der Microsoft-Login und ein Minecraft-Konto sind für den Smoke-Test nicht
-erforderlich. Verwende beim manuellen Testen ausschließlich eigene Testkonten.
+The smoke test does not require Microsoft sign-in or a Minecraft account. Use
+only accounts you own when performing manual tests.
 
-## Änderungen einreichen
+## Submitting changes
 
-- Erstelle einen thematisch fokussierten Branch.
-- Ändere den Lockfile zusammen mit `package.json`, wenn sich Abhängigkeiten
-  ändern.
-- Nimm keine generierten Installer, Laufzeitdaten, Kontositzungen oder Logs in
-  den Commit auf.
-- Ergänze Tests oder nachvollziehbare manuelle Prüfschritte.
-- Beschreibe bei Änderungen an Downloads, Authentifizierung, IPC oder
-  Dateisystemzugriff die Sicherheitsauswirkungen.
-- Stelle sicher, dass du neu beigesteuerte Inhalte unter der MIT-Lizenz
-  veröffentlichen darfst und kennzeichne Inhalte Dritter.
+- Create a focused branch for one topic.
+- Update the lockfile together with `package.json` when dependencies change.
+- Do not commit generated installers, runtime data, account sessions, or logs.
+- Add tests or clear manual verification steps.
+- Describe the security impact of changes to downloads, authentication, IPC, or
+  file-system access.
+- Make sure you may publish new material under the MIT License and identify any
+  third-party content.
 
-Vor einem Pull Request sollten mindestens folgende Befehle erfolgreich sein:
+At minimum, run the following commands before opening a pull request:
 
 ```powershell
 npm ci
@@ -47,13 +45,12 @@ npm run smoke
 npm audit --package-lock-only --audit-level=high
 ```
 
-Ein bestehender Audit-Befund darf nicht durch Ausnahmen oder das Abschalten der
-Prüfung verborgen werden. Dokumentiere unvermeidbare Restbefunde mit Ursache,
-Auswirkung und geplantem Fix.
+Do not hide an existing audit finding through exceptions or by disabling the
+check. Document unavoidable remaining findings, including their cause, impact,
+and planned remediation.
 
 ## Review
 
-Ein Pull Request kann Änderungen benötigen, bevor er zusammengeführt wird.
-Maintainer dürfen einen Beitrag ablehnen, wenn er außerhalb des Projektumfangs
-liegt, nicht ausreichend prüfbar ist oder ein unvertretbares Sicherheits- oder
-Wartungsrisiko erzeugt.
+A pull request may require changes before it can be merged. Maintainers may
+decline a contribution that is outside the project scope, cannot be reviewed
+reliably, or introduces an unacceptable security or maintenance risk.

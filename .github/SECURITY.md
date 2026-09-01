@@ -1,40 +1,38 @@
-# Sicherheitsrichtlinie
+# Security Policy
 
-## Unterstützte Versionen
+## Supported versions
 
-Sicherheitskorrekturen werden für den aktuellen Stand des Standard-Branches
-und, soweit praktikabel, für die neueste veröffentlichte Version bereitgestellt.
-Ältere Versionen werden nicht garantiert unterstützt.
+Security fixes are provided for the current default-branch state and, where
+practical, the latest published version. Older versions are not guaranteed to
+receive updates.
 
-## Schwachstelle vertraulich melden
+## Reporting a vulnerability privately
 
-Bitte veröffentliche vermutete Schwachstellen, Zugangsdaten oder Exploit-Details
-nicht in einem öffentlichen Issue, einer Diskussion oder einem Pull Request.
+Do not publish suspected vulnerabilities, credentials, or exploit details in a
+public issue, discussion, or pull request.
 
-Nutze stattdessen GitHubs Funktion **Report a vulnerability** im Reiter
-**Security** dieses Repositorys. Falls diese Funktion noch nicht verfügbar ist,
-kontaktiere die Maintainer über einen privaten, auf dem Organisationsprofil
-angegebenen Kontaktweg.
+Use **Report a vulnerability** on this repository's **Security** tab. If that
+feature is unavailable, contact the maintainers through a private contact
+method listed on the organization profile.
 
-Eine hilfreiche Meldung enthält:
+A useful report includes:
 
-- betroffene Version oder Commit-ID,
-- nachvollziehbare Schritte oder einen minimalen Proof of Concept,
-- mögliche Auswirkungen und Voraussetzungen,
-- bekannte Abhilfen,
-- eine Kontaktmöglichkeit für Rückfragen.
+- the affected version or commit ID;
+- reproducible steps or a minimal proof of concept;
+- possible impact and required conditions;
+- known mitigations;
+- a way to contact you with follow-up questions.
 
-Entferne vorher Tokens, Microsoft-/Minecraft-Kontodaten, Nutzernamen, lokale
-Dateipfade und andere personenbezogene Daten aus Logs und Screenshots.
+Remove tokens, Microsoft or Minecraft account data, user names, local file
+paths, and other personal information from logs and screenshots first.
 
-Wir bestätigen den Eingang nach Möglichkeit innerhalb von sieben Tagen und
-geben anschließend regelmäßig einen Status. Bitte gib den Maintainern vor einer
-Veröffentlichung ausreichend Zeit für Analyse, Korrektur und Release.
+We aim to acknowledge a report within seven days and provide regular status
+updates afterward. Please allow the maintainers sufficient time to investigate,
+fix, and release a correction before public disclosure.
 
-## Umfang
+## Scope
 
-Zum Umfang gehören insbesondere der Launcher, Update-/Downloadpfade,
-Authentifizierung, lokale Speicherung von Kontodaten, IPC-Grenzen sowie die
-Paketierung. Schwachstellen in Drittanbieter-Diensten oder unverändert
-übernommenen Abhängigkeiten sollten zusätzlich dem jeweiligen Anbieter gemeldet
-werden.
+The scope includes the launcher, update and download paths, authentication,
+local account-data storage, IPC boundaries, and packaging. Vulnerabilities in
+third-party services or unmodified dependencies should also be reported to the
+respective provider.
