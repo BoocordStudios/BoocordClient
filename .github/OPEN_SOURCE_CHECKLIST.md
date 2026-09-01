@@ -28,9 +28,9 @@ darauf öffentlich entwickelt werden.
 - [x] Alle für den ersten Commit vorgemerkten Dateien wurden einzeln geprüft;
       insbesondere keine Inhalte aus `tmp*`, `game-data`, `dist*`,
       `node_modules` oder App-Profilen.
-- [ ] Ein Secret-Scan des vollständigen zu veröffentlichenden Git-Verlaufs ist
-      ohne ungeklärte Treffer abgeschlossen. Gefundene Secrets wurden widerrufen,
-      nicht nur aus Dateien gelöscht.
+- [x] Lokaler Kandidaten-Scan, GitHub Push Protection und der vollständige
+      TruffleHog-Scan des veröffentlichten Git-Verlaufs sind ohne ungeklärte
+      Treffer abgeschlossen.
 - [ ] Rechte an Quellcode, Logo, Installer-Grafiken, Konfigurationen und sonstigen
       Assets sind geklärt. Inhalte Dritter sind mit Quelle und Lizenz erfasst.
 - [x] README, Projektbeschreibung und Markenhinweise erklären die Beziehung zu
@@ -44,6 +44,8 @@ darauf öffentlich entwickelt werden.
 - [x] Dependency Graph, Dependabot Alerts und Security Updates sind aktiviert.
 - [x] Das Standard-Token für Actions besitzt nur Leserechte; Schreibrechte werden
       ausschließlich pro Job vergeben.
+- [x] Ein aktives Ruleset schützt den Standard-Branch vor Löschung und
+      nicht-linearen Force-Pushes, ohne normale Maintainer-Pushes zu blockieren.
 - [ ] Für den Standard-Branch gilt ein Ruleset: Pull Request erforderlich,
       mindestens ein unabhängiges Review, veraltete Freigaben verwerfen,
       Diskussionen auflösen, erforderliche Checks erzwingen sowie Force-Pushes
