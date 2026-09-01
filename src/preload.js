@@ -1,11 +1,6 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("boocordApi", {
-  getInstallerState: () => ipcRenderer.invoke("installer:get-state"),
-  startInstaller: (options) => ipcRenderer.invoke("installer:start", options),
-  openInstallerPath: (targetPath) => ipcRenderer.invoke("installer:open-path", targetPath),
-  minimizeInstallerWindow: () => ipcRenderer.invoke("installer:window-minimize"),
-  closeInstallerWindow: () => ipcRenderer.invoke("installer:window-close"),
   getLauncherState: (options) => ipcRenderer.invoke("launcher:get-state", options),
   getModdingState: () => ipcRenderer.invoke("launcher:get-modding-state"),
   getLauncherWindowState: () => ipcRenderer.invoke("launcher:window-state"),

@@ -1,9 +1,9 @@
 # Open-source release checklist
 
 This file documents the reviewed release status, but it is not a guarantee.
-Open code-signing and runtime-dependency items block a binary from being
-presented as a stable release. The source may be developed publicly as long as
-those limitations remain clearly disclosed.
+Open code-signing and runtime-dependency items must be disclosed prominently
+with every binary release. They do not prevent publishing the source, but users
+must be able to make an informed decision before running an unsigned build.
 
 ## Local preparation
 
@@ -64,7 +64,7 @@ those limitations remain clearly disclosed.
       certificate whose private key is never stored in the repository.
 - [x] The complete installer build generates SHA-256 checksums.
 - [x] A validated CycloneDX 1.6 SBOM with reproducible output was generated for
-      the current 1.0.2 build and included in the checksum file.
+      the current 1.0.3 build and included in the checksum file.
 - [ ] Update and download sources use HTTPS, verify the expected origin, and
       validate hashes or signatures before execution.
 - [x] The privacy notice explains Microsoft sign-in, Discord Rich Presence,
@@ -83,5 +83,5 @@ npm run smoke
 npm audit --package-lock-only --audit-level=high
 ```
 
-Verify all GitHub checks and settings after pushing. Do not mark a binary
-release as stable until the remaining release items have been resolved.
+Verify all GitHub checks and settings after pushing. Release notes must clearly
+identify unresolved signing, dependency, and third-party-service limitations.

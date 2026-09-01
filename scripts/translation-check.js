@@ -18,7 +18,7 @@ function loadLauncherTranslations() {
   const end = source.indexOf("function translateLogLines");
 
   if (start < 0 || end < 0 || end <= start) {
-    fail("Launcher-Übersetzungsfunktionen konnten nicht gefunden werden.");
+    fail("Launcher translation functions could not be found.");
   }
 
   const sandbox = {};
@@ -41,42 +41,13 @@ this.setCurrentLanguageForTest = (language) => { currentLanguage = normalizeLang
   };
 }
 
-function loadSetupTranslations() {
-  const source = read("src/renderer/setup.js");
-  const start = source.indexOf("const setupLanguage");
-  const end = source.indexOf("const state");
-
-  if (start < 0 || end < 0 || end <= start) {
-    fail("Installer-Übersetzungsfunktionen konnten nicht gefunden werden.");
-  }
-
-  const sandbox = {
-    navigator: {
-      language: "en-US"
-    }
-  };
-  vm.createContext(sandbox);
-  vm.runInContext(
-    `${source.slice(start, end)}
-this.translateSetupTextForTest = translateSetupText;
-this.translateSetupLogLineForTest = translateSetupLogLine;`,
-    sandbox
-  );
-
-  return {
-    source,
-    translateText: sandbox.translateSetupTextForTest,
-    translateLogLine: sandbox.translateSetupLogLineForTest
-  };
-}
-
 function loadPresenceTranslations() {
   const source = read("src/services/discordPresenceService.js");
   const start = source.indexOf("const presenceText");
   const end = source.indexOf("function clampActivityText");
 
   if (start < 0 || end < 0 || end <= start) {
-    fail("Discord-Presence-Übersetzungen konnten nicht gefunden werden.");
+    fail("Discord Presence translations could not be found.");
   }
 
   const sandbox = {};
@@ -101,7 +72,7 @@ function assertTranslation(translate, source, expected, context = source) {
   const actual = translate(source, "en");
 
   if (actual !== expected) {
-    fail(`${context}\nErwartet: ${expected}\nErhalten: ${actual}`);
+    fail(`${context}\nExpected: ${expected}\nReceived: ${actual}`);
   }
 }
 
@@ -123,7 +94,7 @@ function removeMarkedSections(html, marker) {
     const sectionStart = remaining.lastIndexOf("<section", markerIndex);
 
     if (sectionStart < 0) {
-      fail(`Markierter HTML-Abschnitt ist unvollständig: ${marker}`);
+      fail(`Marked HTML section is incomplete: ${marker}`);
     }
 
     let depth = 1;
@@ -134,7 +105,7 @@ function removeMarkedSections(html, marker) {
       const nextSectionEnd = remaining.indexOf("</section>", cursor);
 
       if (nextSectionEnd < 0) {
-        fail(`Markierter HTML-Abschnitt ist unvollständig: ${marker}`);
+        fail(`Marked HTML section is incomplete: ${marker}`);
       }
 
       if (nextSectionStart >= 0 && nextSectionStart < nextSectionEnd) {
@@ -186,7 +157,7 @@ function assertStaticUiCoverage(htmlPath, translate, options = {}) {
   );
 
   if (untranslated.length) {
-    fail(`${htmlPath} enthält nicht übersetzte UI-Texte:\n- ${untranslated.join("\n- ")}`);
+    fail(`${htmlPath} contains untranslated UI text:\n- ${untranslated.join("\n- ")}`);
   }
 }
 
@@ -255,62 +226,37 @@ launcherCases.forEach(([source, expected]) => {
 });
 
 if (launcher.translateText("Settings", "de") !== "Einstellungen") {
-  fail("Die deutsche Normalisierung für Settings fehlt.");
+  fail("The German normalization for Settings is missing.");
 }
 if (launcher.translateText("Music", "de") !== "Musik") {
-  fail("Die deutsche Übersetzung für Music fehlt.");
+  fail("The German translation for Music is missing.");
 }
 if (launcher.translateText("Launcher Bereiche", "de") !== "Launcher-Bereiche") {
-  fail("Die deutsche Schreibweise für Launcher-Bereiche ist nicht normalisiert.");
+  fail("The German spelling for launcher sections is not normalized.");
 }
 if (launcher.translateText("Mod Browser", "de") !== "Mod-Browser") {
-  fail("Die deutsche Schreibweise für Mod-Browser ist nicht normalisiert.");
+  fail("The German spelling for Mod Browser is not normalized.");
 }
 
 launcher.setCurrentLanguage("de");
 if (launcher.getCurrentLocale() !== "de-DE") {
-  fail("Der deutsche Locale-Wert ist nicht de-DE.");
+  fail("The German locale value is not de-DE.");
 }
 launcher.setCurrentLanguage("en");
 if (launcher.getCurrentLocale() !== "en-US") {
-  fail("Der englische Locale-Wert ist nicht en-US.");
+  fail("The English locale value is not en-US.");
 }
 
 if (launcher.source.includes("Keine Detailbeschreibung verfugbar.")) {
-  fail("Der Tippfehler 'verfugbar' ist noch vorhanden.");
+  fail("The 'verfugbar' typo is still present.");
 }
 if (!launcher.source.includes('closest?.("[data-i18n-skip], .material-icons")')) {
-  fail("Material-Icon-Texte sind nicht vom Übersetzer ausgeschlossen.");
+  fail("Material icon text is not excluded from translation.");
 }
 
 assertStaticUiCoverage("src/renderer/index.html", launcher.translateText, {
   removeSkippedSections: true
 });
-
-const setup = loadSetupTranslations();
-const setupCases = [
-  ["Installieren. Starten. Fertig.", "Install. Launch. Done."],
-  ["Installieren und starten", "Install and launch"],
-  ["Bereit für die Installation.", "Ready to install."],
-  ["Installation abgeschlossen.", "Installation complete."],
-  ["Der Installer wurde mit Exit-Code 5 beendet.", "The installer exited with code 5."],
-  ["Das interne Installationspaket wurde nicht gefunden.", "The internal installation package was not found."]
-];
-
-setupCases.forEach(([source, expected]) => {
-  assertTranslation(setup.translateText, source, expected, `Installer: ${source}`);
-});
-
-if (setup.translateText("Custom Setup UI", "de") !== "Eigene Setup-Oberfläche") {
-  fail("Die deutsche Installer-Bezeichnung ist nicht vollständig lokalisiert.");
-}
-
-const translatedSetupLog = setup.translateLogLine("[setup] Installation abgeschlossen: C:\\Boocord\\Boocord.exe");
-if (translatedSetupLog !== "[setup] Installation complete: C:\\Boocord\\Boocord.exe") {
-  fail(`Installer-Log wurde nicht übersetzt: ${translatedSetupLog}`);
-}
-
-assertStaticUiCoverage("src/renderer/setup.html", setup.translateText);
 
 const presence = loadPresenceTranslations();
 const presenceCases = [
@@ -329,9 +275,9 @@ presenceCases.forEach(([source, expected]) => {
 });
 
 if (presence.keys.de.join("|") !== presence.keys.en.join("|")) {
-  fail("Die Discord-Presence-Sprachpakete enthalten unterschiedliche Schlüssel.");
+  fail("The Discord Presence language packs contain different keys.");
 }
 
 console.log(
-  `Übersetzungsprüfung erfolgreich (${launcherCases.length + setupCases.length + presenceCases.length} dynamische Fälle).`
+  `Translation check passed (${launcherCases.length + presenceCases.length} dynamic cases).`
 );

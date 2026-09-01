@@ -2,11 +2,9 @@ const path = require("node:path");
 const os = require("node:os");
 const crypto = require("node:crypto");
 const { pathToFileURL } = require("node:url");
-const { spawn } = require("node:child_process");
 const fs = require("node:fs/promises");
 const nodeFs = require("node:fs");
 const { constants: fsConstants } = nodeFs;
-const packageMetadata = require("../package.json");
 const { app, BrowserWindow, clipboard, dialog, ipcMain, screen, shell } = require("electron");
 const {
   addSelectedProject,
@@ -39,13 +37,6 @@ const profileIconFilePrefix = "profile-icon";
 const launcherBackgroundFilePrefix = "launcher-background";
 const profileDataOwnershipFileName = ".boocord-profile-data.json";
 const profileIconExtensions = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp", ".ico"]);
-const isInstallerUiMode = process.argv.includes("--installer-ui") || Boolean(packageMetadata.boocordInstallerUi);
-const installerBundleFileName = "BoocordClient-InnerSetup.exe";
-const defaultInstallDirectory = path.join(
-  process.env.LOCALAPPDATA || path.join(os.homedir(), "AppData", "Local"),
-  "Programs",
-  "Boocord Client"
-);
 let mainWindow = null;
 let launcherWindowDragState = null;
 let launcherWindowDragTimer = null;
@@ -2299,191 +2290,6 @@ function createWindow() {
   mainWindow.loadFile(path.join(__dirname, "renderer", "index.html"));
 }
 
-function createInstallerWindow() {
-  mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 880,
-    minWidth: 1040,
-    minHeight: 720,
-    frame: false,
-    titleBarStyle: "hidden",
-    backgroundColor: "#090d12",
-    title: "Boocord Client Installer",
-    icon: path.join(__dirname, "..", "boocord_logo.png"),
-    webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
-      contextIsolation: true,
-      nodeIntegration: false
-    }
-  });
-
-  mainWindow.on("closed", () => {
-    if (mainWindow && mainWindow.isDestroyed()) {
-      mainWindow = null;
-    }
-  });
-
-  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-    if (/^https?:\/\//i.test(url)) {
-      shell.openExternal(url);
-      return { action: "deny" };
-    }
-
-    return { action: "allow" };
-  });
-
-  mainWindow.webContents.on("will-navigate", (event, url) => {
-    if (/^https?:\/\//i.test(url)) {
-      event.preventDefault();
-      shell.openExternal(url);
-    }
-  });
-
-  mainWindow.removeMenu();
-  mainWindow.loadFile(path.join(__dirname, "renderer", "setup.html"));
-}
-
-async function resolveInstallerBundlePath() {
-  const overridePath = String(readCliOption("installer-bundle") || "").trim();
-  const candidatePaths = [];
-
-  if (overridePath) {
-    candidatePaths.push(path.resolve(overridePath));
-  }
-
-  candidatePaths.push(
-    path.join(process.resourcesPath, "bootstrap", installerBundleFileName),
-    path.join(launcherRootDirectory, "dist", `Boocord Client Setup ${app.getVersion()}.exe`)
-  );
-
-  for (const candidatePath of candidatePaths) {
-    if (await pathExists(candidatePath)) {
-      return candidatePath;
-    }
-  }
-
-  return candidatePaths[0];
-}
-
-async function resolveInstalledClientExecutablePath() {
-  const overrideDirectory = String(readCliOption("install-dir") || "").trim();
-  const candidatePaths = [];
-
-  if (overrideDirectory) {
-    candidatePaths.push(path.join(path.resolve(overrideDirectory), "Boocord Client.exe"));
-  }
-
-  candidatePaths.push(
-    path.join(defaultInstallDirectory, "Boocord Client.exe")
-  );
-
-  for (const candidatePath of candidatePaths) {
-    if (await pathExists(candidatePath)) {
-      return candidatePath;
-    }
-  }
-
-  return candidatePaths[0];
-}
-
-function launchDetachedExecutable(executablePath, args = []) {
-  const child = spawn(executablePath, args, {
-    detached: true,
-    stdio: "ignore",
-    windowsHide: true
-  });
-
-  child.unref();
-}
-
-async function getInstallerUiState() {
-  const installerBundlePath = await resolveInstallerBundlePath();
-  const installedExecutablePath = await resolveInstalledClientExecutablePath();
-  const clientAlreadyInstalled = await pathExists(installedExecutablePath);
-
-  return {
-    companyName: "Boocord Studios",
-    installerBundlePath,
-    installerBundleReady: await pathExists(installerBundlePath),
-    installDirectory: path.dirname(installedExecutablePath),
-    installedExecutablePath: clientAlreadyInstalled ? installedExecutablePath : null,
-    launchAfterInstall: true,
-    productName: "Boocord Client",
-    version: app.getVersion()
-  };
-}
-
-async function runInstallerUiInstall(options = {}) {
-  const installerBundlePath = await resolveInstallerBundlePath();
-
-  if (!(await pathExists(installerBundlePath))) {
-    throw new Error("Das interne Installationspaket wurde nicht gefunden.");
-  }
-
-  const exitCode = await new Promise((resolve, reject) => {
-    const child = spawn(installerBundlePath, ["/S"], {
-      stdio: "ignore",
-      windowsHide: true
-    });
-
-    child.once("error", reject);
-    child.once("exit", (code) => {
-      resolve(typeof code === "number" ? code : 0);
-    });
-  });
-
-  if (exitCode !== 0) {
-    throw new Error(`Der Installer wurde mit Exit-Code ${exitCode} beendet.`);
-  }
-
-  const installedExecutablePath = await resolveInstalledClientExecutablePath();
-
-  if (!(await pathExists(installedExecutablePath))) {
-    throw new Error("Die Installation ist abgeschlossen, aber die Client-Datei wurde nicht gefunden.");
-  }
-
-  if (options.launchAfterInstall !== false) {
-    launchDetachedExecutable(installedExecutablePath);
-  }
-
-  return {
-    installedExecutablePath,
-    installDirectory: path.dirname(installedExecutablePath),
-    launched: options.launchAfterInstall !== false,
-    ok: true
-  };
-}
-
-function registerInstallerIpcHandlers() {
-  ipcMain.handle("installer:get-state", async () =>
-    getInstallerUiState()
-  );
-
-  ipcMain.handle("installer:start", async (_event, options = {}) =>
-    runInstallerUiInstall(options)
-  );
-
-  ipcMain.handle("installer:open-path", async (_event, targetPath) => {
-    if (!targetPath) {
-      return { ok: false, message: "Kein Pfad übergeben." };
-    }
-
-    const errorMessage = await shell.openPath(targetPath);
-    return {
-      ok: errorMessage.length === 0,
-      message: errorMessage
-    };
-  });
-
-  ipcMain.handle("installer:window-minimize", () => {
-    BrowserWindow.getFocusedWindow()?.minimize();
-  });
-
-  ipcMain.handle("installer:window-close", () => {
-    BrowserWindow.getFocusedWindow()?.close();
-  });
-}
-
 function registerSharedIpcHandlers() {
   ipcMain.handle("clipboard:write-text", (_event, value = "") => {
     clipboard.writeText(String(value ?? ""));
@@ -3116,17 +2922,6 @@ async function startLauncherApp() {
   });
 }
 
-async function startInstallerUi() {
-  registerInstallerIpcHandlers();
-  createInstallerWindow();
-
-  app.on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createInstallerWindow();
-    }
-  });
-}
-
 const hasSingleInstanceLock = app.requestSingleInstanceLock();
 
 if (!hasSingleInstanceLock) {
@@ -3143,19 +2938,11 @@ app.whenReady().then(async () => {
   }
 
   registerSharedIpcHandlers();
-
-  if (isInstallerUiMode) {
-    await startInstallerUi();
-    return;
-  }
-
   await startLauncherApp();
 });
 
 app.once("before-quit", () => {
-  if (!isInstallerUiMode) {
-    void discordPresence.dispose();
-  }
+  void discordPresence.dispose();
 });
 
 app.on("window-all-closed", () => {

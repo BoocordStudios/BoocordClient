@@ -3,7 +3,7 @@ const { getLauncherState, loadManifest } = require("../src/services/launcherServ
 const manifest = loadManifest();
 
 if (!manifest.clientName || !manifest.launcherName || !manifest.minecraftVersion || !Array.isArray(manifest.mods)) {
-  throw new Error("Manifest ist unvollständig.");
+  throw new Error("The manifest is incomplete.");
 }
 
 (async () => {
@@ -13,9 +13,9 @@ if (!manifest.clientName || !manifest.launcherName || !manifest.minecraftVersion
     fallbackMinecraftDirectory: process.cwd()
   });
 
-  console.log(`Manifest für ${manifest.clientName} auf Minecraft ${manifest.minecraftVersion} geladen.`);
-  console.log(`Basis-Mods: ${manifest.mods.join(", ")}`);
-  console.log(`Standard-Datenordner: ${state.settings.dataDirectory}`);
+  console.log(`Loaded the ${manifest.clientName} manifest for Minecraft ${manifest.minecraftVersion}.`);
+  console.log(`Base mods: ${manifest.mods.join(", ")}`);
+  console.log(`Default data directory: ${state.settings.dataDirectory}`);
 })().catch((error) => {
   console.error(error);
   process.exit(1);

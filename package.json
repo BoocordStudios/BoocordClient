@@ -1,18 +1,16 @@
 {
   "name": "boocord-client-launcher",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Independent Windows launcher for a Fabric-based Minecraft client.",
   "main": "src/main.js",
   "author": "Boocord Studios",
   "license": "MIT",
   "scripts": {
     "start": "electron .",
-    "installer:assets": "powershell -ExecutionPolicy Bypass -File scripts/generate-installer-assets.ps1",
     "pack": "electron-builder --dir",
     "dist:app": "electron-builder --win nsis",
-    "dist:setup-ui": "electron-builder --win portable --config scripts/electron-builder.setup-ui.cjs",
-    "dist:installer": "node scripts/build-custom-installer.js",
-    "dist": "electron-builder --win nsis",
+    "dist:installer": "node scripts/build-installer.js",
+    "dist": "npm run dist:installer",
     "check:translations": "node scripts/translation-check.js",
     "smoke": "node scripts/smoke-test.js"
   },
@@ -46,15 +44,21 @@
       ]
     },
     "nsis": {
-      "oneClick": true,
+      "artifactName": "Boocord-Client-Installer-${version}.${ext}",
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
       "runAfterFinish": true,
-      "allowToChangeInstallationDirectory": false,
+      "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "Boocord Client",
-      "installerHeader": "assets/installer/installerHeader.bmp",
-      "installerSidebar": "assets/installer/installerSidebar.bmp",
-      "include": "assets/installer/installer.nsh"
+      "installerLanguages": [
+        "en_US"
+      ],
+      "language": "1033",
+      "multiLanguageInstaller": false,
+      "displayLanguageSelector": false
     }
   },
   "dependencies": {

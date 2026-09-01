@@ -24,7 +24,7 @@ body:
     id: version
     attributes:
       label: Client version or commit
-      placeholder: For example, 1.0.2 or a commit ID
+      placeholder: For example, 1.0.3 or a commit ID
     validations:
       required: true
   - type: input

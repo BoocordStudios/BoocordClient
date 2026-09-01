@@ -3913,175 +3913,6 @@ body.launch-error-open {
     color: var(--text-muted);
 }
 
-.setup-body {
-    min-height: 100vh;
-}
-
-.setup-windowbar {
-    position: sticky;
-    top: 0;
-    z-index: 1200;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.9rem 1.15rem 0.75rem;
-    background: rgba(8, 11, 16, 0.92);
-    backdrop-filter: blur(18px);
-    border-bottom: 1px solid rgba(var(--accent-rgb), 0.12);
-}
-
-.setup-windowbar-drag {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    min-width: 0;
-    -webkit-app-region: drag;
-    app-region: drag;
-}
-
-.setup-windowbar-copy {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-}
-
-.setup-windowbar-copy strong {
-    font-size: 0.96rem;
-    letter-spacing: 0.02em;
-}
-
-.setup-windowbar-copy small {
-    color: var(--text-muted);
-}
-
-.setup-window-controls {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    -webkit-app-region: no-drag;
-    app-region: no-drag;
-}
-
-.setup-window-button {
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.04);
-    color: var(--text);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.setup-window-button:hover {
-    border-color: rgba(var(--accent-rgb), 0.22);
-    background: rgba(var(--accent-rgb), 0.1);
-}
-
-.setup-window-button-close:hover {
-    border-color: rgba(255, 111, 145, 0.24);
-    background: rgba(255, 111, 145, 0.14);
-}
-
-.setup-main {
-    padding-top: 1.5rem;
-}
-
-.setup-hero {
-    align-items: stretch;
-}
-
-.setup-hero-copy {
-    gap: 0.4rem;
-}
-
-.setup-status-grid {
-    align-content: start;
-}
-
-.setup-note {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-top: 1.15rem;
-    padding: 0.95rem 1.05rem;
-    border-radius: 20px;
-    background: rgba(var(--accent-rgb), 0.08);
-    border: 1px solid rgba(var(--accent-rgb), 0.16);
-    color: var(--accent-pale);
-}
-
-.setup-note .material-icons {
-    color: var(--primary-light);
-}
-
-.setup-flow-grid,
-.setup-feature-grid {
-    display: grid;
-    gap: 1.5rem;
-}
-
-.setup-flow-grid {
-    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
-}
-
-.setup-feature-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.setup-progress-card,
-.setup-log-card,
-.setup-feature-card {
-    padding: 1.5rem;
-}
-
-.setup-operations-summary {
-    grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
-}
-
-.setup-step-list {
-    display: grid;
-    gap: 0.9rem;
-    margin-top: 1rem;
-}
-
-.setup-step {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.9rem;
-    padding: 1rem 1.05rem;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.035);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.setup-step .material-icons {
-    width: 48px;
-    height: 48px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 16px;
-    color: var(--primary);
-    background: rgba(var(--accent-rgb), 0.12);
-    flex-shrink: 0;
-}
-
-.setup-step strong {
-    display: block;
-    margin-bottom: 0.2rem;
-    font-family: "Kanit", sans-serif;
-    font-size: 1.08rem;
-}
-
-.setup-step small {
-    color: var(--text-muted);
-}
-
 button:disabled {
     opacity: 0.45;
     cursor: not-allowed;
@@ -4114,9 +3945,7 @@ button:disabled {
     .modding-layout,
     .settings-layout,
     .start-grid,
-    .compact-footer,
-    .setup-flow-grid,
-    .setup-feature-grid {
+    .compact-footer {
         grid-template-columns: 1fr;
     }
 
@@ -4248,15 +4077,6 @@ button:disabled {
     .launcher-windowbar-shell {
         gap: 0.75rem;
         padding: 0 0.15rem 0 0.7rem;
-    }
-
-    .setup-windowbar {
-        padding-left: 0.8rem;
-        padding-right: 0.8rem;
-    }
-
-    .setup-windowbar-copy {
-        display: none;
     }
 
     .mobile-menu-btn {

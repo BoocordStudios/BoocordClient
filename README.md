@@ -38,19 +38,20 @@ npm run start -- --profile=alt
 
 ## Building the installer
 
-Build the complete installer with the Boocord setup interface:
+Build the standard English Windows installer:
 
 ```powershell
 npm run dist:installer
 ```
 
-The outer installer is written to
-`dist/Boocord Client Installer <version>.exe`.
+The installer is written to
+`dist/Boocord-Client-Installer-<version>.exe`.
 `dist/SHA256SUMS.txt` contains the corresponding SHA-256 checksums.
-`npm run dist` builds only the inner NSIS installer.
+`npm run dist` runs the same complete installer build.
 
-The Windows installer uses a minimal Boocord-branded header and sidebar. By
-default, it installs directly for the current user.
+The Windows installer uses the regular English NSIS wizard. It defaults to the
+current user, allows choosing a destination folder, and can optionally launch
+Boocord Client from the finish page.
 
 ## Multiple installations and profiles
 
