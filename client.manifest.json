@@ -1,0 +1,22 @@
+{
+  "clientName": "Boocord Client",
+  "launcherName": "Boocord Client",
+  "runtimeDirectory": "runtime",
+  "instanceDirectory": "instance",
+  "minecraftVersion": "1.21.11",
+  "memory": {
+    "min": "2G",
+    "max": "4G"
+  },
+  "extraJavaArgs": [],
+  "mods": [
+    "fabric-api",
+    "sodium",
+    "lithium",
+    "modmenu",
+    "iris"
+  ],
+  "optionalDefaultMods": [
+    "simple-voice-chat"
+  ]
+}

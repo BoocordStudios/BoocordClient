@@ -1,0 +1,69 @@
+{
+  "name": "boocord-client-launcher",
+  "version": "1.0.2",
+  "description": "Eigenständiger Windows-Launcher für einen Fabric-basierten Minecraft-Client.",
+  "main": "src/main.js",
+  "author": "Boocord Studios",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "installer:assets": "powershell -ExecutionPolicy Bypass -File scripts/generate-installer-assets.ps1",
+    "pack": "electron-builder --dir",
+    "dist:app": "electron-builder --win nsis",
+    "dist:setup-ui": "electron-builder --win portable --config scripts/electron-builder.setup-ui.cjs",
+    "dist:installer": "node scripts/build-custom-installer.js",
+    "dist": "electron-builder --win nsis",
+    "check:translations": "node scripts/translation-check.js",
+    "smoke": "node scripts/smoke-test.js"
+  },
+  "build": {
+    "appId": "com.boocord.client",
+    "productName": "Boocord Client",
+    "npmRebuild": false,
+    "directories": {
+      "buildResources": "assets",
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "scripts/**/*",
+      "client.manifest.json",
+      "boocord_logo.png",
+      "overrides/**/*",
+      "LICENSE",
+      "PRIVACY.md",
+      "README.md"
+    ],
+    "win": {
+      "icon": "boocord_logo.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": true,
+      "runAfterFinish": true,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Boocord Client",
+      "installerHeader": "assets/installer/installerHeader.bmp",
+      "installerSidebar": "assets/installer/installerSidebar.bmp",
+      "include": "assets/installer/installer.nsh"
+    }
+  },
+  "dependencies": {
+    "discord-rpc": "^4.0.1",
+    "minecraft-launcher-core": "^3.18.2",
+    "msmc": "^5.0.5"
+  },
+  "devDependencies": {
+    "electron": "^41.10.7",
+    "electron-builder": "^26.15.3"
+  }
+}

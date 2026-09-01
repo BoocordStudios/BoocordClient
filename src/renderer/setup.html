@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boocord Client Installer</title>
+    <meta name="description" content="Boocord Client Installer mit derselben visuellen Sprache wie der Launcher.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="setup-body">
+    <div class="bg-animation">
+        <div class="bolt-lines"></div>
+    </div>
+
+    <header class="setup-windowbar">
+        <div class="setup-windowbar-drag">
+            <div class="logo">
+                <img src="./logo.png" alt="Boocord Logo" class="logo-img">
+                <span class="logo-text">Boocord</span>
+            </div>
+            <div class="setup-windowbar-copy">
+                <strong>Boocord Client Installer</strong>
+                <small>Custom Setup UI</small>
+            </div>
+        </div>
+        <div class="setup-window-controls">
+            <button id="setup-window-minimize" class="setup-window-button" type="button" aria-label="Minimieren">
+                <span class="material-icons">remove</span>
+            </button>
+            <button id="setup-window-close" class="setup-window-button setup-window-button-close" type="button" aria-label="Schließen">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="launcher-main setup-main">
+        <div class="container">
+            <section class="hero-panel panel-card panel-hero setup-hero">
+                <div class="hero-copy setup-hero-copy">
+                    <span class="section-eyebrow">Boocord Studios</span>
+                    <h1 class="hero-title">Installieren. Starten. Fertig.</h1>
+                    <p class="hero-subtitle">
+                        Der Installer nutzt jetzt dieselbe visuelle Sprache wie der Client:
+                        keine Windows-Wizard-Optik mehr, sondern eine eigenständige Boocord-Oberfläche.
+                    </p>
+                    <div class="hero-cta">
+                        <button id="setup-primary-button" class="btn btn-primary" type="button">
+                            <span id="setup-primary-label">Installieren und starten</span>
+                            <span class="material-icons">download</span>
+                        </button>
+                        <button id="setup-open-dir-button" class="btn btn-secondary" type="button">
+                            <span>Zielordner öffnen</span>
+                        </button>
+                    </div>
+                    <div class="setup-note">
+                        <span class="material-icons">verified</span>
+                        <p>Installation pro Benutzer, direkter Client-Start nach erfolgreichem Abschluss.</p>
+                    </div>
+                </div>
+
+                <div class="hero-status-grid setup-status-grid">
+                    <div class="metric-card">
+                        <span class="material-icons">apartment</span>
+                        <div>
+                            <strong id="setup-company-label">Boocord Studios</strong>
+                            <small>Herausgeber</small>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <span class="material-icons">inventory_2</span>
+                        <div>
+                            <strong id="setup-bundle-label">Prüfe Paket...</strong>
+                            <small>Installer Bundle</small>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <span class="material-icons">folder_open</span>
+                        <div>
+                            <strong id="setup-target-label">-</strong>
+                            <small>Zielpfad</small>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <span class="material-icons">rocket_launch</span>
+                        <div>
+                            <strong id="setup-installed-label">Nicht installiert</strong>
+                            <small>Client Status</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="setup-flow-grid">
+                <article class="panel-card operations-panel setup-progress-card">
+                    <div class="operations-summary setup-operations-summary">
+                        <div class="operations-copy">
+                            <span class="operations-kicker">Setup Status</span>
+                            <h2 id="setup-status-text">Bereit für die Installation.</h2>
+                            <p id="setup-status-detail" class="operations-detail">
+                                Das Setup wartet auf den Start des Installationsvorgangs.
+                            </p>
+                        </div>
+                        <div id="setup-progress-shell" class="operations-meter" data-active="false" data-indeterminate="false">
+                            <div id="setup-progress-meta" class="progress-meta">Warten auf Aktion</div>
+                            <div class="progress-track" aria-hidden="true">
+                                <div id="setup-progress-bar" class="progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setup-step-list">
+                        <div class="setup-step">
+                            <span class="material-icons">package_2</span>
+                            <div>
+                                <strong>Paket vorbereiten</strong>
+                                <small>Das eingebettete Installationspaket wird geprüft und still gestartet.</small>
+                            </div>
+                        </div>
+                        <div class="setup-step">
+                            <span class="material-icons">install_desktop</span>
+                            <div>
+                                <strong>Dateien installieren</strong>
+                                <small>Der eigentliche Client wird im Hintergrund für den aktuellen Benutzer eingerichtet.</small>
+                            </div>
+                        </div>
+                        <div class="setup-step">
+                            <span class="material-icons">play_circle</span>
+                            <div>
+                                <strong>Direkt starten</strong>
+                                <small>Nach erfolgreicher Installation öffnet sich der Boocord Client automatisch.</small>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="panel-card setup-log-card">
+                    <div class="panel-header">
+                        <span class="material-icons">terminal</span>
+                        <div>
+                            <h2>Setup Log</h2>
+                            <p>Technische Statusmeldungen des Installationsablaufs.</p>
+                        </div>
+                    </div>
+                    <div class="log-output-toolbar">
+                        <button id="setup-copy-log-button" class="btn btn-product btn-product-secondary log-copy-button" type="button">
+                            <span id="setup-copy-log-label">Setup-Log kopieren</span>
+                            <span class="material-icons">content_copy</span>
+                        </button>
+                    </div>
+                    <pre id="setup-log-output" class="log-output">Installer UI bereit.</pre>
+                </article>
+            </section>
+
+            <section class="setup-feature-grid">
+                <article class="panel-card feature-card setup-feature-card">
+                    <div class="feature-icon">
+                        <span class="material-icons">palette</span>
+                    </div>
+                    <h3>Boocord statt Wizard</h3>
+                    <h4>Keine Standard-Dialoge mehr</h4>
+                    <p>Die sichtbare Setup-Oberfläche läuft komplett in eurer eigenen UI-Language statt als Windows-Standard-Assistent.</p>
+                </article>
+
+                <article class="panel-card feature-card setup-feature-card">
+                    <div class="feature-icon">
+                        <span class="material-icons">bolt</span>
+                    </div>
+                    <h3>Schneller Ablauf</h3>
+                    <h4>Ein Klick bis zum Start</h4>
+                    <p>Der Installationsvorgang läuft still im Hintergrund und startet den Client nach Erfolg sofort automatisch.</p>
+                </article>
+
+                <article class="panel-card feature-card setup-feature-card">
+                    <div class="feature-icon">
+                        <span class="material-icons">shield</span>
+                    </div>
+                    <h3>Saubere Trennung</h3>
+                    <h4>UI oben, Installer darunter</h4>
+                    <p>Die Optik kommt aus Electron, der eigentliche Installationsmechanismus bleibt stabil über das bestehende Setup-Paket.</p>
+                </article>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content compact-footer">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <img src="./logo.png" alt="Boocord Logo" class="logo-img">
+                        <span class="logo-text">Boocord</span>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Setup</h4>
+                    <ul>
+                        <li><span id="setup-version-label">Version wird geladen...</span></li>
+                        <li><span id="setup-install-state-footer">Status wird geladen...</span></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Boocord</h4>
+                    <ul>
+                        <li><a href="https://boocord.com" target="_blank" rel="noreferrer">Website</a></li>
+                        <li><a href="https://discord.gg/xW7cBmkXUw" target="_blank" rel="noreferrer">Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="setup-year"></span> Boocord Studios. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="particles"></div>
+
+    <script src="./setup.js"></script>
+</body>
+</html>

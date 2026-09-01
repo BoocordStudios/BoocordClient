@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boocord Client</title>
+    <meta name="description" content="Boocord Launcher für Login, Modding, Updates und direkten Minecraft-Start.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="launcher-body">
+    <div class="bg-animation">
+        <div class="bolt-lines"></div>
+    </div>
+
+    <header class="launcher-windowbar">
+        <div class="container launcher-windowbar-shell">
+            <div class="launcher-windowbar-drag">
+                <div class="launcher-windowbar-brand">
+                    <img src="./logo.png" alt="Boocord Logo" class="launcher-windowbar-logo">
+                    <div class="launcher-windowbar-copy">
+                        <strong>Boocord <span class="highlight">Client</span></strong>
+                    </div>
+                </div>
+            </div>
+            <div class="launcher-window-controls">
+                <button id="launcher-window-minimize" class="launcher-window-button" type="button" aria-label="Minimieren">
+                    <span class="material-icons">remove</span>
+                </button>
+                <button id="launcher-window-maximize" class="launcher-window-button" type="button" aria-label="Maximieren">
+                    <span id="launcher-window-maximize-icon" class="material-icons">crop_square</span>
+                </button>
+                <button id="launcher-window-close" class="launcher-window-button launcher-window-button-close" type="button" aria-label="Schließen">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <img src="./logo.png" alt="Boocord Logo" class="logo-img">
+                    <span class="logo-text">Boocord</span>
+                </div>
+
+                <div class="nav-center">
+                    <ul class="nav-links launcher-tabs" role="tablist" aria-label="Launcher Bereiche">
+                        <li><button class="tab-button is-active" type="button" data-tab-target="start" role="tab" aria-selected="true">Start</button></li>
+                        <li><button class="tab-button" type="button" data-tab-target="launcher" role="tab" aria-selected="false">Logs</button></li>
+                        <li><button class="tab-button" type="button" data-tab-target="modding" role="tab" aria-selected="false">Mods</button></li>
+                        <li><button class="tab-button" type="button" data-tab-target="settings" role="tab" aria-selected="false">Settings</button></li>
+                    </ul>
+                </div>
+
+                <div class="nav-account">
+                    <button id="account-trigger" class="account-trigger" type="button">
+                        <img id="account-avatar" class="account-avatar" src="./logo.png" alt="Account Avatar" data-fallback="./logo.png">
+                        <div class="account-trigger-copy">
+                            <span id="account-trigger-name">Account</span>
+                            <small id="account-trigger-subtitle">Nicht angemeldet</small>
+                        </div>
+                        <span class="material-icons account-trigger-icon">expand_more</span>
+                    </button>
+                    <div id="account-dropdown" class="account-dropdown">
+                        <div class="account-dropdown-header">
+                            <strong class="account-dropdown-title">Accounts</strong>
+                        </div>
+                        <div id="account-list" class="account-list">
+                            <button id="empty-account-state" class="account-entry account-entry-empty" disabled>
+                                <img class="account-entry-avatar" src="./logo.png" alt="Kein Account">
+                                <span>Noch kein Account gespeichert</span>
+                            </button>
+                        </div>
+                        <div class="account-dropdown-actions">
+                            <button id="nav-login-button" class="btn btn-product account-dropdown-button" type="button">
+                                <span>Account hinzufügen</span>
+                            </button>
+                            <button id="nav-logout-button" class="btn btn-product btn-product-secondary account-dropdown-button" type="button">
+                                <span>Account entfernen</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="mobile-menu-btn" type="button" aria-label="Navigation öffnen">
+                    <span class="material-icons">menu</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="launcher-main">
+        <div class="container">
+            <div class="tab-panels">
+                <section class="tab-panel is-active" data-tab-panel="start" role="tabpanel">
+                    <div class="hero-panel panel-card panel-hero">
+                        <div class="hero-copy">
+                            <span class="section-eyebrow">BOOCORD STUDIOS</span>
+                            <h1 class="hero-title">Boocord Client</h1>
+                            <p class="hero-subtitle">
+                                Die einfachste Art, Minecraft zu genießen. Mit einem Client,
+                                der zu dir passt. Ohne Kompromisse.
+                            </p>
+                            <div class="hero-cta">
+                                <button id="hero-launch-button" class="btn btn-primary" type="button">
+                                    <span>Spiel starten</span>
+                                </button>
+                                <button id="hero-stop-button" class="btn btn-secondary btn-danger-outline" type="button">
+                                    <span>Spiel stoppen</span>
+                                </button>
+                                <button id="hero-install-button" class="btn btn-secondary" type="button">
+                                    <span>Installieren / Updaten</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="hero-status-grid">
+                            <div class="metric-card">
+                                <span class="material-icons">folder_special</span>
+                                <div>
+                                    <strong id="current-profile-label">Standard</strong>
+                                    <small>Aktuelles Profil</small>
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <span class="material-icons">dns</span>
+                                <div>
+                                    <strong id="version-label">-</strong>
+                                    <small>Minecraft Version</small>
+                                </div>
+                            </div>
+                            <button id="hero-boocord-button" class="metric-card metric-action metric-action-boocord" type="button" aria-label="Boocord direkt starten">
+                                <span class="material-icons">flash_on</span>
+                                <div>
+                                    <strong id="hero-boocord-button-label">Boocord</strong>
+                                    <small id="hero-boocord-button-subtitle">Verbindung herstellen</small>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="start-grid">
+                        <article class="panel-card live-overview-card">
+                            <div class="panel-header">
+                                <span class="material-icons">insights</span>
+                                <div>
+                                    <h2>Boocord</h2>
+                                </div>
+                            </div>
+                            <div class="live-overview-grid">
+                                <div id="server-health-card" class="live-overview-tile" data-state="loading">
+                                    <span class="live-overview-label">Server</span>
+                                    <strong id="server-health-label">Lädt...</strong>
+                                </div>
+                                <div class="live-overview-tile">
+                                    <span class="live-overview-label">Spieler online</span>
+                                    <strong id="server-players-label">-</strong>
+                                </div>
+                                <div class="live-overview-tile">
+                                    <span class="live-overview-label">Account</span>
+                                    <strong id="client-ready-label">Prüfe...</strong>
+                                </div>
+                                <div class="live-overview-tile">
+                                    <span class="live-overview-label">Ping</span>
+                                    <strong id="server-latency-label">-</strong>
+                                </div>
+
+
+                            </div>
+                        </article>
+
+                        <article class="panel-card profile-library-card">
+                            <div class="panel-header profile-library-header">
+                                <div class="profile-create-inline">
+                                    <div>
+                                        <label class="field-label" for="profile-create-input">Neues Profil</label>
+                                        <input id="profile-create-input" class="launcher-input" type="text" maxlength="32" spellcheck="false" placeholder="z. B. PvP, Vanilla, Replay">
+                                    </div>
+                                    <button id="profile-create-button" class="btn btn-product" type="button">
+                                        <span>Profil anlegen</span>
+                                    </button>
+                                    <button id="profile-import-button" class="btn btn-product btn-product-secondary" type="button">
+                                        <span>Instanz importieren</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="profile-card-grid" class="profile-card-grid">
+                                <div class="empty-state">Profile werden geladen...</div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="tab-panel" data-tab-panel="launcher" role="tabpanel" hidden>
+                    <div class="panel-card operations-panel">
+                        <div class="operations-summary">
+                            <div class="operations-copy">
+                                <span class="operations-kicker">Launcher Status</span>
+                                <h2 id="status-text">Bereit.</h2>
+                                <p id="status-detail" class="operations-detail">Noch keine Aktion aktiv.</p>
+                            </div>
+                    <div id="progress-shell" class="operations-meter" data-active="false" data-indeterminate="false">
+                        <div id="progress-meta" class="progress-meta">Warten auf Aktion</div>
+                        <div class="progress-track" aria-hidden="true">
+                            <div id="progress-bar" class="progress-bar"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="log-output-shell">
+                    <div class="log-output-actions">
+                        <button
+                            id="result-copy-button"
+                            class="log-copy-button log-copy-button-icon"
+                            type="button"
+                            aria-label="Logs kopieren"
+                            title="Logs kopieren"
+                        >
+                            <span id="result-copy-icon" class="material-icons" aria-hidden="true">content_copy</span>
+                        </button>
+                        <button
+                            id="result-clear-button"
+                            class="log-copy-button log-copy-button-icon"
+                            type="button"
+                            aria-label="Logs leeren"
+                            title="Logs leeren"
+                        >
+                            <span id="result-clear-icon" class="material-icons" aria-hidden="true">delete</span>
+                        </button>
+                    </div>
+                    <pre id="result-box" class="log-output">Launcher bereit.</pre>
+                </div>
+            </div>
+
+                        <article class="panel-card feature-card">
+                            <div class="feature-icon">
+                                <span class="material-icons">badge</span>
+                            </div>
+                            <h3>Konto</h3>
+                            <h4>Microsoft Login und Multi-Account</h4>
+                            <p id="account-card-text">Nicht angemeldet. Melde dich an, um Minecraft mit deinem Microsoft-Profil zu starten.</p>
+                            <ul class="product-features">
+                                <li><span class="material-icons">check_circle</span> Login direkt im Launcher</li>
+                                <li><span class="material-icons">check_circle</span> Aktiven Account sofort wechseln</li>
+                                <li><span class="material-icons">check_circle</span> Avatar direkt in der Navbar</li>
+                            </ul>
+                            <div class="product-actions">
+                                <button id="card-login-button" class="btn btn-product" type="button">
+                                    <span>Account hinzufügen</span>
+                                    <span class="material-icons">arrow_forward</span>
+                                </button>
+                                <button id="logout-button" class="btn btn-product btn-product-secondary" type="button">
+                                    <span>Account entfernen</span>
+                                </button>
+                            </div>
+                        </article>
+
+                        <article class="panel-card feature-card">
+                            <div class="feature-icon">
+                                <span class="material-icons">build_circle</span>
+                            </div>
+                            <h3>Runtime</h3>
+                            <h4>Install, Update und Start</h4>
+                            <p id="runtime-card-text">Noch keine Runtime installiert.</p>
+                            <ul class="product-features">
+                                <li><span class="material-icons">check_circle</span> Fabric Runtime für den Client</li>
+                                <li><span class="material-icons">check_circle</span> Wiederverwendung bestehender Installationen</li>
+                                <li><span class="material-icons">check_circle</span> Verwaltete Java-Runtime pro Minecraft-Version</li>
+                            </ul>
+                            <div class="product-actions">
+                                <button id="card-install-button" class="btn btn-product" type="button">
+                                    <span>Installieren / Updaten</span>
+                                    <span class="material-icons">arrow_forward</span>
+                                </button>
+                                <button id="card-stop-button" class="btn btn-product btn-product-danger" type="button">
+                                    <span>Spiel stoppen</span>
+                                </button>
+                                <button id="card-reinstall-java-button" class="btn btn-product btn-product-secondary" type="button">
+                                    <span>Java neu installieren</span>
+                                </button>
+                            </div>
+                        </article>
+
+                        <article class="panel-card feature-card">
+                            <div class="feature-icon">
+                                <span class="material-icons">folder_open</span>
+                            </div>
+                            <h3>Dateien</h3>
+                            <h4>Datenpfade und Schnellzugriff</h4>
+                            <p id="data-dir-display" class="product-path">-</p>
+                            <p id="profile-label" class="field-hint">Profil: Standard</p>
+                            <p id="profile-hint" class="field-hint">Weitere Profile: Launcher mit <code>--profile=name</code> starten.</p>
+                            <ul class="product-features">
+                                <li><span class="material-icons">check_circle</span> Eigene Runtime- und Instanzstruktur</li>
+                                <li><span class="material-icons">check_circle</span> Saves, Mods und Runtime getrennt</li>
+                                <li><span class="material-icons">check_circle</span> Speicherort jederzeit änderbar</li>
+                            </ul>
+                            <div class="product-actions">
+                                <button id="browse-button" class="btn btn-product" type="button">
+                                    <span>Ordner ändern</span>
+                                </button>
+                                <button id="open-data-button" class="btn btn-product btn-product-secondary" type="button">
+                                    <span>Ordner öffnen</span>
+                                </button>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="tab-panel" data-tab-panel="modding" role="tabpanel" hidden>
+                    <section class="panel-card modding-workspace">
+                        <div class="modding-mode-shell">
+                            <div class="modding-mode-copy">
+                                <p class="modding-mode-kicker">Modding Modus</p>
+                                <h3>Wähle deinen Bereich</h3>
+                            </div>
+                            <div class="modding-mode-selector" role="tablist" aria-label="Modding Modus">
+                                <button class="modding-mode-button" type="button" data-modding-mode-target="browser" aria-selected="false">
+                                    <span class="material-icons">travel_explore</span>
+                                    <span class="modding-mode-button-copy">
+                                        <strong>Mod Browser</strong>
+                                        <small id="modding-browser-summary">Mods suchen und filtern</small>
+                                    </span>
+                                </button>
+                                <button class="modding-mode-button" type="button" data-modding-mode-target="package" aria-selected="false">
+                                    <span class="material-icons">inventory_2</span>
+                                    <span class="modding-mode-button-copy">
+                                        <strong>Aktives Paket</strong>
+                                        <small id="modding-package-summary">Ausgewählte Mods verwalten</small>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="modding-mode-empty" class="modding-mode-empty">
+                            <span class="material-icons">touch_app</span>
+                            <strong>Modus auswählen</strong>
+                            <p>Wähle oben aus, ob du neue Mods suchen oder dein aktuelles Paket verwalten willst.</p>
+                        </div>
+
+                        <div class="modding-section-panels">
+                            <section class="modding-section-panel" data-modding-mode-panel="browser" hidden>
+                                <div class="modding-section-grid">
+                                    <article class="modding-sidebar-card">
+                                        <div class="modding-card-header">
+                                            <span class="material-icons">travel_explore</span>
+                                            <div>
+                                                <h4 id="modding-browser-heading">Mod Browser</h4>
+                                            </div>
+                                        </div>
+
+                                        <div class="modding-content-selector" role="tablist" aria-label="Inhaltstyp">
+                                            <button class="modding-content-button" type="button" data-modding-content-target="mod" aria-selected="true">Mods</button>
+                                            <button class="modding-content-button" type="button" data-modding-content-target="resourcepack" aria-selected="false">Resource Packs</button>
+                                            <button class="modding-content-button" type="button" data-modding-content-target="shader" aria-selected="false">Shader Packs</button>
+                                        </div>
+
+                                        <div class="launcher-form">
+                                            <label id="mod-search-label" class="field-label" for="mod-search-input">Mod suchen</label>
+                                            <div class="mod-search-stack">
+                                                <input id="mod-search-input" class="launcher-input" type="text" spellcheck="false" placeholder="z. B. Sodium, ReplayMod, Mod Menu">
+                                                <button id="mod-search-button" class="btn btn-product" type="button">
+                                                    <span>Suchen</span>
+                                                </button>
+                                            </div>
+                                            <div class="mod-filter-grid">
+                                                <div>
+                                                    <label class="field-label" for="mod-category-select">Kategorie</label>
+                                                    <div class="select-shell">
+                                                        <select id="mod-category-select" class="launcher-input launcher-select"></select>
+                                                        <span class="material-icons select-shell-icon">expand_more</span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label class="field-label" for="mod-sort-select">Sortierung</label>
+                                                    <div class="select-shell">
+                                                        <select id="mod-sort-select" class="launcher-input launcher-select">
+                                                            <option value="downloads">Beliebtheit</option>
+                                                            <option value="follows">Follower</option>
+                                                            <option value="updated">Zuletzt aktualisiert</option>
+                                                            <option value="newest">Neu veröffentlicht</option>
+                                                            <option value="relevance">Relevanz</option>
+                                                        </select>
+                                                        <span class="material-icons select-shell-icon">expand_more</span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label class="field-label" for="mod-install-target">Typ</label>
+                                                    <div class="select-shell modding-type-select-shell">
+                                                        <select id="mod-install-target" class="launcher-input launcher-select">
+                                                            <option value="mod">Mods</option>
+                                                            <option value="resourcepack">Resource Packs</option>
+                                                            <option value="shader">Shader Packs</option>
+                                                        </select>
+                                                        <span class="material-icons select-shell-icon">expand_more</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modding-sidebar-details">
+                                            <div class="modding-detail-box">
+                                                <strong id="mod-search-count">Noch keine Suche</strong>
+                                            </div>
+                                        </div>
+                                    </article>
+
+                                    <article class="modding-results-card">
+                                        <div class="modding-card-header">
+                                            <span class="material-icons">view_module</span>
+                                            <div>
+                                                <h4>Suchergebnisse</h4>
+                                                <p id="mod-page-summary" class="mod-browser-page-summary">Seite 1</p>
+                                            </div>
+                                        </div>
+                                        <div id="mod-search-results" class="mod-card-grid mod-results">
+                                            <div class="empty-state">Noch keine Suche gestartet.</div>
+                                        </div>
+                                        <div class="mod-browser-paging">
+                                            <div id="mod-pagination" class="mod-pagination"></div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </section>
+
+                            <section class="modding-section-panel" data-modding-mode-panel="package" hidden>
+                                <div class="modding-section-grid modding-section-grid-selected">
+                                    <article class="modding-sidebar-card">
+                                        <div class="modding-card-header">
+                                            <span class="material-icons">inventory_2</span>
+                                            <div>
+                                                <h4 id="selected-content-heading">Aktive Auswahl</h4>
+                                            </div>
+                                        </div>
+
+                                        <div class="modding-content-selector" role="tablist" aria-label="Auswahltyp">
+                                            <button class="modding-content-button" type="button" data-modding-content-target="mod" aria-selected="true">Mods</button>
+                                            <button class="modding-content-button" type="button" data-modding-content-target="resourcepack" aria-selected="false">Resource Packs</button>
+                                            <button class="modding-content-button" type="button" data-modding-content-target="shader" aria-selected="false">Shader Packs</button>
+                                        </div>
+
+                                        <div class="modding-sidebar-details">
+                                            <div class="modding-detail-box">
+                                                <span>Typ</span>
+                                                <div class="select-shell modding-type-select-shell">
+                                                    <select id="selected-mod-state" class="launcher-input launcher-select">
+                                                        <option value="mod">Mods</option>
+                                                        <option value="resourcepack">Resource Packs</option>
+                                                        <option value="shader">Shader Packs</option>
+                                                    </select>
+                                                    <span class="material-icons select-shell-icon">expand_more</span>
+                                                </div>
+                                            </div>
+                                            <div class="modding-detail-box selected-content-search-box">
+                                                <span>Suche im Paket</span>
+                                                <input id="selected-content-search-input" class="launcher-input" type="text" spellcheck="false" placeholder="Mods im Paket durchsuchen">
+                                            </div>
+                                        </div>
+                                    </article>
+
+                                    <article class="modding-results-card">
+                                        <div class="modding-card-header">
+                                            <span class="material-icons">apps</span>
+                                            <div>
+                                                <h4 id="selected-content-list-heading">Ausgewählte Mods</h4>
+                                            </div>
+                                        </div>
+                                        <div id="local-import-surface" class="local-import-surface" data-drag-active="false">
+                                            <div class="local-import-copy">
+                                                <strong id="local-import-title">Mods importieren</strong>
+                                                <p id="local-import-hint">Dateien auswählen oder direkt hier hineinziehen.</p>
+                                            </div>
+                                            <button id="local-import-button" class="btn btn-product btn-product-secondary" type="button">
+                                                <span id="local-import-button-label">Dateien wählen</span>
+                                            </button>
+                                        </div>
+                                        <div id="selected-mods" class="mod-card-grid selected-mods">
+                                            <div class="empty-state">Noch keine Mods ausgewählt.</div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </section>
+                        </div>
+                    </section>
+                </section>
+
+                <section class="tab-panel" data-tab-panel="settings" role="tabpanel" hidden>
+                    <div class="settings-layout">
+                        <article class="panel-card feature-card settings-card">
+                            <div class="settings-card-header">
+                                <div class="feature-icon">
+                                    <span class="material-icons">translate</span>
+                                </div>
+                                <h3>Sprache</h3>
+                            </div>
+                            <div class="launcher-form">
+                                <label class="field-label" for="language-select">Launcher Sprache</label>
+                                <div class="select-shell">
+                                    <select id="language-select" class="launcher-input launcher-select">
+                                        <option value="de">Deutsch</option>
+                                        <option value="en">English</option>
+                                    </select>
+                                    <span class="material-icons select-shell-icon">expand_more</span>
+                                </div>
+                                <p class="field-hint">Ändert die Sprache des Launchers sofort.</p>
+                            </div>
+                        </article>
+
+                        <article class="panel-card feature-card settings-card">
+                            <div class="settings-card-header">
+                                <div class="feature-icon">
+                                    <span class="material-icons">tune</span>
+                                </div>
+                                <h3>Versionen und Runtime</h3>
+                            </div>
+                            <div class="launcher-form">
+                                <label class="field-label" for="minecraft-version-select">Minecraft Version</label>
+                                <div class="select-shell">
+                                    <select id="minecraft-version-select" class="launcher-input launcher-select"></select>
+                                    <span class="material-icons select-shell-icon">expand_more</span>
+                                </div>
+
+                                <label class="field-label" for="fabric-loader-select">Fabric Loader</label>
+                                <div class="select-shell">
+                                    <select id="fabric-loader-select" class="launcher-input launcher-select"></select>
+                                    <span class="material-icons select-shell-icon">expand_more</span>
+                                </div>
+
+                                <div class="modding-chips">
+                                    <div class="modding-chip">
+                                        <span class="chip-label">Java benötigt</span>
+                                        <strong id="required-java-version">-</strong>
+                                    </div>
+                                    <div class="modding-chip">
+                                        <span class="chip-label">Java erkannt</span>
+                                        <strong id="detected-java-version">-</strong>
+                                    </div>
+                                </div>
+
+                                <div class="input-row">
+                                    <div>
+                                        <label class="field-label" for="memory-min-input">RAM Minimum</label>
+                                        <input id="memory-min-input" class="launcher-input" type="text" spellcheck="false">
+                                    </div>
+                                    <div>
+                                        <label class="field-label" for="memory-max-input">RAM Maximum</label>
+                                        <input id="memory-max-input" class="launcher-input" type="text" spellcheck="false">
+                                    </div>
+                                </div>
+
+                                <label class="field-label" for="java-gc-profile-select">Garbage Collector</label>
+                                <div class="select-shell">
+                                    <select id="java-gc-profile-select" class="launcher-input launcher-select">
+                                        <option value="auto">Automatisch (empfohlen)</option>
+                                        <option value="g1">G1 (kompatibel)</option>
+                                        <option value="zgc">ZGC (niedrige Pausen)</option>
+                                    </select>
+                                    <span class="material-icons select-shell-icon">expand_more</span>
+                                </div>
+                                <p class="field-hint">Steuert die Java-GC-Strategie für Minecraft beim nächsten Start.</p>
+
+                                <label class="setting-toggle" for="open-logs-on-launch-input">
+                                    <input id="open-logs-on-launch-input" type="checkbox">
+                                    <span class="setting-toggle-copy">
+                                        <strong>Beim Spielstart automatisch zu Logs wechseln</strong>
+                                        <small>Springt beim Start über den Launcher direkt in den Logs-Tab.</small>
+                                    </span>
+                                </label>
+
+                                <label class="setting-toggle" for="minimize-on-launch-input">
+                                    <input id="minimize-on-launch-input" type="checkbox">
+                                    <span class="setting-toggle-copy">
+                                        <strong>Launcher beim Spielstart minimieren</strong>
+                                        <small>Der Launcher wird nach dem erfolgreichen Start im Hintergrund verstaut.</small>
+                                    </span>
+                                </label>
+
+                                <div class="launcher-background-section">
+                                    <div class="launcher-background-copy">
+                                        <div class="field-label">Launcher Hintergrundbild</div>
+                                        <p id="launcher-background-status" class="field-hint">Kein Hintergrundbild ausgewählt.</p>
+                                    </div>
+                                    <div id="launcher-background-preview" class="launcher-background-preview" data-has-image="false">
+                                        <span id="launcher-background-preview-label">Kein Bild aktiv</span>
+                                    </div>
+                                    <div class="launcher-background-actions">
+                                        <button id="launcher-background-select-button" class="btn btn-product" type="button">
+                                            <span>Bild auswählen</span>
+                                        </button>
+                                        <button id="launcher-background-remove-button" class="btn btn-product btn-product-secondary" type="button">
+                                            <span>Bild entfernen</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content compact-footer launcher-footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <img src="./logo.png" alt="Boocord Logo" class="logo-img">
+                        <span class="logo-text">Boocord</span>
+                    </div>
+                </div>
+                <div class="footer-shortcuts" aria-label="Boocord Links">
+                    <a class="footer-shortcut footer-shortcut-discord" href="https://discord.gg/xW7cBmkXUw" target="_blank" rel="noreferrer">
+                        <span class="footer-shortcut-icon material-icons" aria-hidden="true">forum</span>
+                        <span class="footer-shortcut-label">Discord</span>
+                    </a>
+                    <a class="footer-shortcut footer-shortcut-website" href="https://boocord.com" target="_blank" rel="noreferrer">
+                        <span class="footer-shortcut-icon material-icons" aria-hidden="true">language</span>
+                        <span class="footer-shortcut-label">Website</span>
+                    </a>
+                    <a class="footer-shortcut footer-shortcut-music" href="https://music.boocord.com" target="_blank" rel="noreferrer">
+                        <span class="footer-shortcut-icon material-icons" aria-hidden="true">music_note</span>
+                        <span class="footer-shortcut-label">Music</span>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="year"></span> Boocord Studios. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="particles"></div>
+
+    <div id="language-choice-modal" class="language-choice-modal" hidden>
+        <div class="language-choice-overlay" aria-hidden="true"></div>
+        <section class="language-choice-dialog" role="dialog" aria-modal="true" aria-labelledby="language-choice-title" data-i18n-skip="true">
+            <div class="language-choice-header">
+                <span class="section-eyebrow">Language / Sprache</span>
+                <h2 id="language-choice-title">Choose your language / Sprache auswählen</h2>
+                <p>Pick the launcher language. You can change it later in Settings.</p>
+                <p>Wähle die Launcher-Sprache. Du kannst sie später in den Einstellungen ändern.</p>
+            </div>
+            <div class="language-choice-actions">
+                <button id="language-choice-de" class="language-choice-button" type="button" data-language-choice="de">
+                    <strong>Deutsch</strong>
+                    <small>Launcher auf Deutsch verwenden</small>
+                </button>
+                <button id="language-choice-en" class="language-choice-button" type="button" data-language-choice="en">
+                    <strong>English</strong>
+                    <small>Use the launcher in English</small>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <div id="mod-detail-modal" class="mod-detail-modal" hidden>
+        <button id="mod-detail-overlay" class="mod-detail-overlay" type="button" aria-label="Mod-Details schließen"></button>
+        <aside class="mod-detail-drawer" role="dialog" aria-modal="true" aria-labelledby="mod-detail-title">
+            <div class="mod-detail-drawer-header">
+                <div>
+                    <span class="section-eyebrow">Mod Info</span>
+                    <h2 id="mod-detail-title">Modrinth Details</h2>
+                </div>
+                <button id="mod-detail-close" class="mod-detail-close" type="button" aria-label="Schließen">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div id="mod-detail-content" class="mod-detail-content">
+                <div class="empty-state">Wähle eine Mod aus, um Details zu sehen.</div>
+            </div>
+        </aside>
+    </div>
+
+    <div id="profile-import-modal" class="profile-import-modal" hidden>
+        <button id="profile-import-overlay" class="profile-import-overlay" type="button" aria-label="Importauswahl schließen"></button>
+        <section class="profile-import-dialog" role="dialog" aria-modal="true" aria-labelledby="profile-import-title">
+            <div class="profile-import-header">
+                <div>
+                    <span class="section-eyebrow">Instanzen importieren</span>
+                    <h2 id="profile-import-title">Modrinth und CurseForge</h2>
+                    <p id="profile-import-subtitle" class="profile-import-subtitle" hidden></p>
+                </div>
+                <button id="profile-import-close" class="profile-import-close" type="button" aria-label="Schließen">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div id="profile-import-sources" class="profile-import-sources" aria-label="Launcher auswählen"></div>
+            <div id="profile-import-list" class="profile-import-list">
+                <div class="empty-state">Launcher werden gesucht...</div>
+            </div>
+            <div class="profile-import-footer">
+                <button id="profile-import-refresh" class="btn btn-product btn-product-secondary" type="button">
+                    <span>Neu scannen</span>
+                </button>
+                <button id="profile-import-browse" class="btn btn-product btn-product-secondary" type="button">
+                    <span>Ordner manuell wählen</span>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <div id="launch-error-modal" class="launch-error-modal" hidden>
+        <button id="launch-error-overlay" class="launch-error-overlay" type="button" aria-label="Fehlermeldung schließen"></button>
+        <section class="launch-error-dialog" role="alertdialog" aria-modal="true" aria-labelledby="launch-error-title" aria-describedby="launch-error-message">
+            <div class="launch-error-header">
+                <div>
+                    <span class="section-eyebrow">Launcher Status</span>
+                    <h2 id="launch-error-title">Start fehlgeschlagen</h2>
+                    <p id="launch-error-detail" class="launch-error-detail">Der Startprozess wurde beendet und als gestoppt markiert.</p>
+                </div>
+                <button id="launch-error-close" class="launch-error-close" type="button" aria-label="Schließen">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="launch-error-body">
+                <div class="launch-error-icon" aria-hidden="true">
+                    <span class="material-icons">error</span>
+                </div>
+                <div class="launch-error-copy">
+                    <p id="launch-error-message" class="launch-error-message">Der Startvorgang konnte nicht abgeschlossen werden.</p>
+                </div>
+            </div>
+            <div class="launch-error-footer">
+                <button id="launch-error-confirm" class="btn btn-product btn-product-danger" type="button">
+                    <span>Verstanden</span>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <div id="account-delete-modal" class="profile-delete-modal" hidden>
+        <button id="account-delete-overlay" class="profile-delete-overlay" type="button" aria-label="Account-Dialog schließen"></button>
+        <section class="profile-delete-dialog" role="alertdialog" aria-modal="true" aria-labelledby="account-delete-title" aria-describedby="account-delete-message">
+            <div class="profile-delete-header">
+                <div>
+                    <span class="section-eyebrow">Accountverwaltung</span>
+                    <h2 id="account-delete-title">Account entfernen?</h2>
+                    <p class="profile-delete-detail">Dieser Schritt entfernt den aktuell ausgewählten Account aus dem Launcher.</p>
+                </div>
+                <button id="account-delete-close" class="profile-delete-close" type="button" aria-label="Schließen">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="profile-delete-body">
+                <div class="profile-delete-icon" aria-hidden="true">
+                    <span class="material-icons">person_remove</span>
+                </div>
+                <div class="profile-delete-copy">
+                    <p id="account-delete-message" class="profile-delete-message">Willst du diesen Account wirklich entfernen?</p>
+                    <div class="profile-delete-warning">
+                        <span class="material-icons" aria-hidden="true">badge</span>
+                        <div>
+                            <strong>Betroffener Account</strong>
+                            <small id="account-delete-name">-</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-delete-footer">
+                <button id="account-delete-cancel" class="btn btn-product btn-product-secondary" type="button">
+                    <span>Abbrechen</span>
+                </button>
+                <button id="account-delete-confirm" class="btn btn-product btn-product-danger" type="button">
+                    <span>Account entfernen</span>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <div id="profile-delete-modal" class="profile-delete-modal" hidden>
+        <button id="profile-delete-overlay" class="profile-delete-overlay" type="button" aria-label="Löschdialog schließen"></button>
+        <section class="profile-delete-dialog" role="alertdialog" aria-modal="true" aria-labelledby="profile-delete-title" aria-describedby="profile-delete-message">
+            <div class="profile-delete-header">
+                <div>
+                    <span class="section-eyebrow">Profilverwaltung</span>
+                    <h2 id="profile-delete-title">Profil löschen?</h2>
+                    <p class="profile-delete-detail">Dieser Schritt entfernt die komplette lokale Instanz dieses Profils.</p>
+                </div>
+                <button id="profile-delete-close" class="profile-delete-close" type="button" aria-label="Schließen">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="profile-delete-body">
+                <div class="profile-delete-icon" aria-hidden="true">
+                    <span class="material-icons">delete_forever</span>
+                </div>
+                <div class="profile-delete-copy">
+                    <p id="profile-delete-message" class="profile-delete-message">Der komplette Profilordner wird entfernt.</p>
+                    <div class="profile-delete-warning">
+                        <span class="material-icons" aria-hidden="true">folder_delete</span>
+                        <div>
+                            <strong>Betroffener Ordner</strong>
+                            <small id="profile-delete-path">-</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-delete-footer">
+                <button id="profile-delete-cancel" class="btn btn-product btn-product-secondary" type="button">
+                    <span>Abbrechen</span>
+                </button>
+                <button id="profile-delete-confirm" class="btn btn-product btn-product-danger" type="button">
+                    <span>Profil löschen</span>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <script src="./renderer.js"></script>
+</body>
+</html>

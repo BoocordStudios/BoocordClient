@@ -1,0 +1,60 @@
+# Dependencies
+node_modules/
+
+# Build and packaging output
+/dist*/
+/release/
+/out/
+*.asar
+*.blockmap
+*.exe
+*.msi
+
+# Extracted application and verification output
+/built-app-extract/
+/installed-app-extract*/
+/tmp*
+/game-data/
+
+# Local launcher state (may contain account data or refresh tokens)
+account-session.json
+launcher-settings.json
+launcher-state.json
+installation-state.json
+profile-meta.json
+.boocord-profile-data.json
+
+# Logs, crash dumps, and test output
+*.log
+*.dmp
+*.heapdump
+coverage/
+.nyc_output/
+
+# Secrets and signing material
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+*.keystore
+*.jks
+*.mobileprovision
+
+# Editors and operating systems
+.idea/
+.vscode/
+*.suo
+*.user
+*.swp
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Package-manager debug output
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*

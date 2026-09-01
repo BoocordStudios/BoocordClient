@@ -1,0 +1,69 @@
+name: Fehler melden
+description: Einen reproduzierbaren Fehler im Boocord Client melden
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke für die Meldung. Suche bitte zuerst nach bestehenden Issues.
+        **Keine Sicherheitslücken, Tokens, Account-Sitzungen oder vollständigen personenbezogenen Logs veröffentlichen.** Nutze dafür den vertraulichen Meldeweg.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Vorprüfung
+      options:
+        - label: Ich habe nach bestehenden Issues gesucht.
+          required: true
+        - label: Diese Meldung enthält keine Zugangsdaten oder personenbezogenen Daten.
+          required: true
+        - label: Es handelt sich nicht um eine vertraulich zu meldende Sicherheitslücke.
+          required: true
+  - type: input
+    id: version
+    attributes:
+      label: Client-Version oder Commit
+      placeholder: z. B. 1.0.2 oder Commit-ID
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Umgebung
+      description: Windows-Version, Architektur, Java- und Node-Version soweit relevant
+      placeholder: Windows 11 24H2, x64, Java 21
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Schritte zum Reproduzieren
+      placeholder: |
+        1. …
+        2. …
+        3. …
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Erwartetes Verhalten
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Tatsächliches Verhalten
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Bereinigte Logs oder Screenshots
+      description: Nur den relevanten Ausschnitt einfügen; Tokens, Namen und lokale Pfade entfernen.
+      render: shell
+  - type: textarea
+    id: context
+    attributes:
+      label: Zusätzlicher Kontext

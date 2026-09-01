@@ -1,0 +1,2 @@
+Boocord Client wurde installiert.
+Lege hier weitere Mod-Konfigurationen oder Presets ab, die beim Installieren kopiert werden sollen.

@@ -1,0 +1,9 @@
+* @BoocordStudios
+
+# Änderungen an sicherheitskritischen Bereichen benötigen ein Maintainer-Review.
+/.github/workflows/ @BoocordStudios
+/package.json @BoocordStudios
+/package-lock.json @BoocordStudios
+/src/main.js @BoocordStudios
+/src/preload.js @BoocordStudios
+/src/services/ @BoocordStudios
