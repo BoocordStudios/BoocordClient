@@ -48,3 +48,6 @@ jobs:
 
       - name: Run smoke test
         run: npm run smoke
+
+      - name: Check launcher dependency compatibility
+        run: npm run test:dependencies
