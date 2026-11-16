@@ -15,13 +15,13 @@ must be able to make an informed decision before running an unsigned build.
       security policy are present.
 - [x] CI, CodeQL, dependency-review, and secret-scanning workflows use minimum
       permissions and pin actions to commit SHAs.
-- [ ] `npm audit --package-lock-only --omit=dev` reports no unresolved high or
-      critical runtime risks. Status on 2026-09-01: **not met** because of two
-      high and two critical findings in the
-      `minecraft-launcher-core` dependency path.
-- [ ] `npm audit --package-lock-only --audit-level=high` reports no unresolved
+- [x] `npm audit --package-lock-only --omit=dev` reports no unresolved high or
+      critical runtime risks. Status on 2026-11-16: **met** (0 findings).
+- [x] `npm audit --package-lock-only --audit-level=high` reports no unresolved
       high or critical findings in the packaged Electron runtime or build
-      tooling. Status on 2026-09-01: **not met**.
+      tooling. Status on 2026-11-16: **met**. Moderate `minimatch` findings
+      remain in the `electron-builder` build tooling only; they are not part of
+      the distributed application and have no non-breaking upstream fix yet.
 - [x] Unused root duplicates (`main.js` and `preload.js`) were reviewed and
       removed from the publication scope. Production entry points exist only
       under `src/`.
@@ -64,7 +64,7 @@ must be able to make an informed decision before running an unsigned build.
       certificate whose private key is never stored in the repository.
 - [x] The complete installer build generates SHA-256 checksums.
 - [x] A validated CycloneDX 1.6 SBOM with reproducible output was generated for
-      the current 1.0.3 build and included in the checksum file.
+      the current 1.0.4 build and included in the checksum file.
 - [ ] Update and download sources use HTTPS, verify the expected origin, and
       validate hashes or signatures before execution.
 - [x] The privacy notice explains Microsoft sign-in, Discord Rich Presence,
