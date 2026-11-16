@@ -1,6 +1,6 @@
 {
   "name": "boocord-client-launcher",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Independent Windows launcher for a Fabric-based Minecraft client.",
   "main": "src/main.js",
   "author": "Boocord Studios",
@@ -68,8 +68,8 @@
     "msmc": "^5.0.5"
   },
   "devDependencies": {
-    "electron": "^44.4.5",
-    "electron-builder": "^26.15.3"
+    "electron": "^44.11.3",
+    "electron-builder": "^26.18.0"
   },
   "overrides": {
     "@electron/get": "^5.1.0",
