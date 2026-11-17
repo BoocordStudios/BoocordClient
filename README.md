@@ -84,9 +84,8 @@ subject to the licenses and terms of their respective projects.
 ## Security status
 
 The source is automatically checked for syntax errors, secrets, and known
-vulnerabilities. The runtime dependency tree currently has no known audit
-findings; moderate findings remain only in the `electron-builder` build
-tooling. The current status is documented in
+vulnerabilities. The runtime and build dependency trees currently have no
+known audit findings. The current status is documented in
 [.github/OPEN_SOURCE_CHECKLIST.md](.github/OPEN_SOURCE_CHECKLIST.md).
 
 Do not assume that a published Windows binary is signed unless its GitHub
