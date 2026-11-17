@@ -19,9 +19,10 @@ must be able to make an informed decision before running an unsigned build.
       critical runtime risks. Status on 2026-11-16: **met** (0 findings).
 - [x] `npm audit --package-lock-only --audit-level=high` reports no unresolved
       high or critical findings in the packaged Electron runtime or build
-      tooling. Status on 2026-11-16: **met**. Moderate `minimatch` findings
-      remain in the `electron-builder` build tooling only; they are not part of
-      the distributed application and have no non-breaking upstream fix yet.
+      tooling. Status on 2026-11-17: **met** (0 findings at any severity).
+      `minimatch` 9.x/10.x in the `electron-builder` build tooling is
+      overridden to 11.x; packaged file selection was verified to be
+      unchanged.
 - [x] Unused root duplicates (`main.js` and `preload.js`) were reviewed and
       removed from the publication scope. Production entry points exist only
       under `src/`.

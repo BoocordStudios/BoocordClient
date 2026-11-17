@@ -55,7 +55,10 @@ The dependency overrides in `package.json` keep `minecraft-launcher-core`
 compatible with patched ZIP and CommonJS UUID libraries and replace its
 unmaintained `request` dependency with the maintained `@cypress/request` fork.
 The `@electron/get` override selects the downloader that uses native fetch
-instead of the older HTTP cache dependency chain. Keep these overrides until
+instead of the older HTTP cache dependency chain. The version-scoped
+`minimatch` overrides move only the 9.x/10.x copies used by `app-builder-lib`
+and `@electron/universal` to the patched 11.x line; older 3.x/5.x copies are
+not affected by the advisory and stay unchanged. Keep these overrides until
 the upstream packages select these dependencies themselves, and run
 `test:dependencies` plus a Windows installer build when changing them.
 
