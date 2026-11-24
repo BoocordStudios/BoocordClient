@@ -7,6 +7,7 @@ const { spawn } = require("node:child_process");
 const { Client } = require("minecraft-launcher-core");
 const LauncherCoreHandler = require("minecraft-launcher-core/components/handler");
 const { Auth } = require("msmc");
+const { refreshMinecraftVersionJson, resolveFreetypeMitigation } = require("./freetypeSecurity");
 
 const rootDirectory = path.resolve(__dirname, "..", "..");
 const manifestPath = path.join(rootDirectory, "client.manifest.json");
@@ -2006,6 +2007,7 @@ function buildLaunchOptions({
   manifest,
   paths,
   runtimeProfile,
+  securityJavaArgs = [],
   settings,
   detached = false
 }) {
@@ -2031,7 +2033,7 @@ function buildLaunchOptions({
       type: "release",
       custom: installState.fabricVersionId
     },
-    customArgs: [...baseJavaArgs, ...gcArgs],
+    customArgs: [...baseJavaArgs, ...gcArgs, ...securityJavaArgs],
     ...(quickPlayTarget
       ? {
           quickPlay: quickPlayTarget
@@ -2045,6 +2047,67 @@ function buildLaunchOptions({
       maxSockets: resolveLauncherDownloadMaxSockets(manifest)
     }
   });
+}
+
+// Makes sure the game starts with a FreeType that is patched against the
+// "minecraft2shell" resource pack font exploit. Never blocks a launch.
+async function prepareFreetypeSecurity({
+  emitEvent,
+  fallbackMinecraftDirectory = null,
+  installState,
+  paths,
+  runtimeProfile,
+  settings
+}) {
+  const minecraftVersion = runtimeProfile.minecraftVersion;
+  const versionDirectory = path.join(
+    paths.runtimeDirectory,
+    "versions",
+    installState?.fabricVersionId || minecraftVersion
+  );
+  const refresh = await refreshMinecraftVersionJson({
+    versionDirectory,
+    versionId: minecraftVersion
+  });
+
+  if (refresh.status === "updated") {
+    emit(emitEvent, "debug", `[Boocord]: Minecraft-Metadaten für ${minecraftVersion} wurden aktualisiert.`);
+  } else if (refresh.status === "failed") {
+    emit(
+      emitEvent,
+      "debug",
+      `[Boocord]: Minecraft-Metadaten konnten nicht geprüft werden (${refresh.error?.message || "unbekannt"}).`
+    );
+  }
+
+  const versionJson = await readJson(refresh.versionJsonPath, null);
+
+  if (!versionJson) {
+    return [];
+  }
+
+  const sharedMinecraftCache = resolveSharedMinecraftCachePaths(
+    settings.dataDirectory,
+    fallbackMinecraftDirectory
+  );
+  const mitigation = await resolveFreetypeMitigation({
+    versionJson,
+    securityDirectory: path.join(sharedMinecraftCache.cache, "boocord-security")
+  });
+
+  if (mitigation.status === "overridden") {
+    emit(emitEvent, "debug", "[Boocord]: Gepatchte FreeType-Bibliothek (2.15.0) wird verwendet.");
+  } else if (mitigation.status === "failed" || mitigation.status === "unsupported-platform") {
+    emit(
+      emitEvent,
+      "debug",
+      `[Boocord]: Gepatchte FreeType-Bibliothek ist nicht verfügbar (${
+        mitigation.error?.message || mitigation.status
+      }). Nutze keine Resource Packs aus unbekannten Quellen.`
+    );
+  }
+
+  return mitigation.javaArgs;
 }
 
 function normalizeLaunchTarget(rawTarget) {
@@ -2253,6 +2316,14 @@ async function prewarmMinecraftRuntime({
 
   launchOptions.directory = versionDirectory;
   await ensureDirectory(versionDirectory);
+  await prepareFreetypeSecurity({
+    emitEvent,
+    fallbackMinecraftDirectory,
+    installState,
+    paths,
+    runtimeProfile,
+    settings
+  });
 
   const versionFile = await launcher.handler.getVersion();
   const mcPath = customVersionId
@@ -6859,6 +6930,13 @@ async function launchClient({
 
   emit(emitEvent, "status", `Starte Minecraft als ${authorization.account.name}...`);
 
+  const securityJavaArgs = await prepareFreetypeSecurity({
+    emitEvent,
+    installState: installResult.installState,
+    paths: installResult.paths,
+    runtimeProfile,
+    settings: nextSettings
+  });
   const child = await launcher.launch(
     buildLaunchOptions({
       authorization: authorization.authorization,
@@ -6867,6 +6945,7 @@ async function launchClient({
       manifest,
       paths: installResult.paths,
       runtimeProfile,
+      securityJavaArgs,
       settings: nextSettings,
       detached: false
     })
@@ -7071,6 +7150,14 @@ async function launchClientManaged({
 
     emitLaunchEvent(launchSession, "status", `Starte Minecraft als ${authorization.account.name}...`);
 
+    const securityJavaArgs = await prepareFreetypeSecurity({
+      emitEvent,
+      fallbackMinecraftDirectory,
+      installState: installResult.installState,
+      paths: installResult.paths,
+      runtimeProfile,
+      settings: nextSettings
+    });
     const launchOptions = buildLaunchOptions({
       authorization: authorization.authorization,
       fallbackMinecraftDirectory,
@@ -7080,6 +7167,7 @@ async function launchClientManaged({
       manifest,
       paths: installResult.paths,
       runtimeProfile,
+      securityJavaArgs,
       settings: nextSettings,
       detached: false
     });
