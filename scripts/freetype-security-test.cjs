@@ -54,18 +54,18 @@ function buildZip(entries) {
   return Buffer.concat([...localParts, centralDirectory, end]);
 }
 
-async function withServer(routes, run) {
+async function withServer(respond, run) {
   const server = http.createServer((request, response) => {
-    const body = routes[request.url];
+    const body = respond(String(request.url), `http://${request.headers.host}`);
 
-    if (body === undefined) {
+    if (typeof body !== "string") {
       response.writeHead(404);
       response.end();
       return;
     }
 
     response.writeHead(200);
-    response.end(typeof body === "function" ? body() : body);
+    response.end(body);
   });
 
   await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
@@ -151,52 +151,53 @@ test("replaces a stale cached version JSON and keeps it on bad data", async (t) 
     libraries: [{ name: "org.lwjgl:lwjgl-freetype:3.4.3-mojang-2.15.0" }]
   });
   let versionRequests = 0;
+  const manifestFor = (baseUrl, hash) =>
+    JSON.stringify({ versions: [{ id: "26.3", url: `${baseUrl}/v/26.3.json`, sha1: hash }] });
 
-  await withServer({}, async (baseUrl) => {
-    const routes = {
-      manifest: JSON.stringify({ versions: [{ id: "26.3", url: `${baseUrl}/v/26.3.json`, sha1: sha1(fresh) }] }),
-      badManifest: JSON.stringify({ versions: [{ id: "26.3", url: `${baseUrl}/v/26.3.json`, sha1: "0".repeat(40) }] })
-    };
-
-    await withServer(
-      {
-        "/manifest.json": () => routes.manifest,
-        "/bad-manifest.json": () => routes.badManifest,
-        "/v/26.3.json": () => {
-          versionRequests += 1;
-          return fresh;
-        }
-      },
-      async (serverUrl) => {
-        routes.manifest = routes.manifest.replaceAll(baseUrl, serverUrl);
-        routes.badManifest = routes.badManifest.replaceAll(baseUrl, serverUrl);
-        const refresh = (manifestName) =>
-          refreshMinecraftVersionJson({
-            versionDirectory: directory,
-            versionId: "26.3",
-            manifestUrl: `${serverUrl}/${manifestName}`
-          });
-
-        await fs.writeFile(versionJsonPath, stale);
-        const mismatch = await refresh("bad-manifest.json");
-        assert.equal(mismatch.status, "failed");
-        assert.equal(await fs.readFile(versionJsonPath, "utf8"), stale);
-
-        assert.equal((await refresh("manifest.json")).status, "updated");
-        assert.equal(await fs.readFile(versionJsonPath, "utf8"), fresh);
-
-        const requestsAfterUpdate = versionRequests;
-        assert.equal((await refresh("manifest.json")).status, "current");
-        assert.equal(versionRequests, requestsAfterUpdate);
-
-        assert.equal((await refresh("missing.json")).status, "failed");
-        assert.equal(await fs.readFile(versionJsonPath, "utf8"), fresh);
-
-        await fs.rm(versionJsonPath);
-        await fs.rm(`${versionJsonPath}.mojang-sha1`);
-        assert.equal((await refresh("manifest.json")).status, "downloaded");
-        assert.equal(await fs.readFile(versionJsonPath, "utf8"), fresh);
+  await withServer(
+    (url, baseUrl) => {
+      if (url === "/manifest.json") {
+        return manifestFor(baseUrl, sha1(fresh));
       }
-    );
-  });
+
+      if (url === "/bad-manifest.json") {
+        return manifestFor(baseUrl, "0".repeat(40));
+      }
+
+      if (url === "/v/26.3.json") {
+        versionRequests += 1;
+        return fresh;
+      }
+
+      return null;
+    },
+    async (serverUrl) => {
+      const refresh = (manifestName) =>
+        refreshMinecraftVersionJson({
+          versionDirectory: directory,
+          versionId: "26.3",
+          manifestUrl: `${serverUrl}/${manifestName}`
+        });
+
+      await fs.writeFile(versionJsonPath, stale);
+      const mismatch = await refresh("bad-manifest.json");
+      assert.equal(mismatch.status, "failed");
+      assert.equal(await fs.readFile(versionJsonPath, "utf8"), stale);
+
+      assert.equal((await refresh("manifest.json")).status, "updated");
+      assert.equal(await fs.readFile(versionJsonPath, "utf8"), fresh);
+
+      const requestsAfterUpdate = versionRequests;
+      assert.equal((await refresh("manifest.json")).status, "current");
+      assert.equal(versionRequests, requestsAfterUpdate);
+
+      assert.equal((await refresh("missing.json")).status, "failed");
+      assert.equal(await fs.readFile(versionJsonPath, "utf8"), fresh);
+
+      await fs.rm(versionJsonPath);
+      await fs.rm(`${versionJsonPath}.mojang-sha1`);
+      assert.equal((await refresh("manifest.json")).status, "downloaded");
+      assert.equal(await fs.readFile(versionJsonPath, "utf8"), fresh);
+    }
+  );
 });
