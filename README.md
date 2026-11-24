@@ -88,5 +88,14 @@ vulnerabilities. The runtime and build dependency trees currently have no
 known audit findings. The current status is documented in
 [.github/OPEN_SOURCE_CHECKLIST.md](.github/OPEN_SOURCE_CHECKLIST.md).
 
+Since 1.0.5 the launcher mitigates the "minecraft2shell" FreeType font exploit
+(malicious fonts in resource packs). Before every start it re-checks the cached
+Minecraft version metadata against Mojang, so library fixes published by Mojang
+are picked up. For Minecraft versions whose metadata still references an
+unpatched FreeType (1.20.5 to 26.2), it loads Mojang's patched FreeType 2.15.0
+build instead, verified by checksum. If that library cannot be obtained, the
+game still starts and the launcher log says so. Only use resource packs from
+sources you trust.
+
 Do not assume that a published Windows binary is signed unless its GitHub
 release notes explicitly confirm the signature.

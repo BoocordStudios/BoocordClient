@@ -1,6 +1,6 @@
 {
   "name": "boocord-client-launcher",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Independent Windows launcher for a Fabric-based Minecraft client.",
   "main": "src/main.js",
   "author": "Boocord Studios",
@@ -13,7 +13,8 @@
     "dist": "npm run dist:installer",
     "check:translations": "node scripts/translation-check.js",
     "smoke": "node scripts/smoke-test.js",
-    "test:dependencies": "node --test scripts/dependency-smoke-test.cjs"
+    "test:dependencies": "node --test scripts/dependency-smoke-test.cjs",
+    "test:security": "node --test scripts/freetype-security-test.cjs"
   },
   "build": {
     "appId": "com.boocord.client",

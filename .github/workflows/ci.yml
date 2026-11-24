@@ -51,3 +51,6 @@ jobs:
 
       - name: Check launcher dependency compatibility
         run: npm run test:dependencies
+
+      - name: Check FreeType security mitigation
+        run: npm run test:security
