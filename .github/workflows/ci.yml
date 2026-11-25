@@ -54,3 +54,6 @@ jobs:
 
       - name: Check FreeType security mitigation
         run: npm run test:security
+
+      - name: Check default Minecraft version handling
+        run: npm run test:defaults
