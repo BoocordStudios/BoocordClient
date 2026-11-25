@@ -1779,7 +1779,20 @@ function mergeSettings(baseSettings, options = {}, manifest, userDataPath) {
 async function readSettings(userDataPath, _fallbackMinecraftDirectory, manifest) {
   const metaPaths = resolveMetaPaths(userDataPath);
   const stored = (await readJson(metaPaths.settingsPath, {})) || {};
-  const storedModding = stored?.modding || {};
+  const storedModding = { ...(stored?.modding || {}) };
+
+  // A profile that was installed without a saved Minecraft version keeps the
+  // version it was installed with instead of following a changed manifest default.
+  if (!storedModding.minecraftVersion) {
+    const dataDirectory = stored.dataDirectory || buildDefaultSettings(userDataPath, manifest).dataDirectory;
+    const installState = await readJson(resolvePaths(dataDirectory, manifest).installStatePath, null);
+    const installedMinecraftVersion = String(installState?.minecraftVersion || "").trim();
+
+    if (installedMinecraftVersion) {
+      storedModding.minecraftVersion = installedMinecraftVersion;
+      stored.modding = storedModding;
+    }
+  }
   const hasStoredSelections = ["selectedMods", "selectedResourcePacks", "selectedShaderPacks"].some((key) =>
     Object.prototype.hasOwnProperty.call(storedModding, key)
   );
@@ -2552,6 +2565,10 @@ function inferRequiredJavaVersion(versionId) {
 
   if (!parsedVersion) {
     return 8;
+  }
+
+  if (compareMinecraftReleaseVersions(parsedVersion, [26, 1, 0]) >= 0) {
+    return 25;
   }
 
   if (compareMinecraftReleaseVersions(parsedVersion, [1, 20, 5]) >= 0) {

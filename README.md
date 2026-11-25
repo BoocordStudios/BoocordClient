@@ -8,7 +8,7 @@ An independent Windows launcher for a Fabric-based Minecraft client.
 ## What it does
 
 - signs users in with Microsoft directly inside the launcher
-- installs Fabric for Minecraft `1.21.11`
+- installs Fabric for Minecraft `26.2` by default
 - keeps runtime and instance data in an isolated application-data directory
 - downloads mods and required dependencies through the Modrinth API
 - launches Minecraft through `minecraft-launcher-core`
@@ -17,7 +17,7 @@ An independent Windows launcher for a Fabric-based Minecraft client.
 ## Requirements
 
 - Windows
-- Java 21 or newer
+- Java 25 or newer for the default Minecraft version (downloaded automatically if missing)
 - a Microsoft account that owns Minecraft: Java Edition
 - Node.js 22.12 or newer
 

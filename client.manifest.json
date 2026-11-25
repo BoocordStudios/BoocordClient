@@ -3,7 +3,7 @@
   "launcherName": "Boocord Client",
   "runtimeDirectory": "runtime",
   "instanceDirectory": "instance",
-  "minecraftVersion": "1.21.11",
+  "minecraftVersion": "26.2",
   "memory": {
     "min": "2G",
     "max": "4G"

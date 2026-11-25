@@ -65,7 +65,7 @@ must be able to make an informed decision before running an unsigned build.
       certificate whose private key is never stored in the repository.
 - [x] The complete installer build generates SHA-256 checksums.
 - [x] A validated CycloneDX 1.6 SBOM with reproducible output was generated for
-      the current 1.0.5 build and included in the checksum file.
+      the current 1.0.6 build and included in the checksum file.
 - [ ] Update and download sources use HTTPS, verify the expected origin, and
       validate hashes or signatures before execution.
 - [x] The privacy notice explains Microsoft sign-in, Discord Rich Presence,
